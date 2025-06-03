@@ -35,7 +35,7 @@ $sucesso = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['status'])) {
     $novo_status = $_POST['status'];
     $agora = date('Y-m-d H:i:s');
-    $sql = "UPDATE pedidos SET status = ?, status_atualizado_em = ? WHERE id = ?";
+    $sql = "UPDATE pedidos SET status = ?, status = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('ssi', $novo_status, $agora, $pedido_id);
     
