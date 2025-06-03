@@ -20,7 +20,9 @@ CREATE TABLE produtos (
     descricao TEXT,
     preco DECIMAL(10,2) NOT NULL,
     quantidade INT NOT NULL,
+    imagem VARCHAR (255),
     disponivel BOOLEAN DEFAULT 1
+    
 );
 
 -- Tabela de pedidos
@@ -43,6 +45,15 @@ CREATE TABLE pedido_itens (
     preco_unitario DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (pedido_id) REFERENCES pedidos(id) ON DELETE CASCADE,
     FOREIGN KEY (produto_id) REFERENCES produtos(id) ON DELETE CASCADE
+);
+
+-- Tabela Status do pedido --
+CREATE TABLE pedido_status_historico (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pedido_id INT NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    data_hora DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (pedido_id) REFERENCES pedidos(id) ON DELETE CASCADE 
 );
 
 -- Inserir um administrador padrão
