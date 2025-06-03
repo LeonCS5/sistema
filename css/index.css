@@ -1,5 +1,5 @@
 body { 
-    font-family: Arial, sans-serif; 
+    font-family: "Roboto", sans-serif;
     margin: 0; 
     padding: 0; 
     background-color: #f4f4f4; 
@@ -23,6 +23,15 @@ body {
     border-bottom: 1px solid #ddd;
 
  }
+
+.icone {
+    width: 44px;
+}
+
+.icone-container {
+    display: flex;
+    align-items: center;
+}
 
 .product-list { 
     display: grid; 
@@ -60,8 +69,9 @@ body {
     cursor: pointer; 
     text-decoration: none; 
     display: inline-block;
-    border-radius: 10px;
+    border-radius: 5px;
 }
+
 .btn:hover { 
     background: #2980b9; }
 .login-buttons { 
