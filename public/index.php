@@ -3,7 +3,7 @@
 require '../config.php';
 
 $conn = connect_db();
-$sql = "SELECT id, nome, descricao, preco FROM produtos WHERE disponivel = 1";
+$sql = "SELECT id, nome, descricao, preco, imagem FROM produtos WHERE disponivel = 1";
 $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
@@ -19,37 +19,55 @@ $result = $conn->query($sql);
 
 </head>
 <body>
-    <header class="headerClass">
-        <div class="icone-container">
-            <img src="../images/icone_galopes.svg" alt="" class="icone">
-            <p>Lopes</p>
-        </div>
-        <div class="login-buttons">
-            <a href="login.php" class="btn">Login</a>
-            <a href="cadastro.php" class="btn">Cadastrar</a>
-        </div>
-    </header>
-    
-    <div>
-        <img src="../images/agua2.jpg" alt="">
-    </div>
 
-
-
-    <div class="container">
-        
-        
-        <div class="product-list">
-            <?php while($produto = $result->fetch_assoc()): ?>
-            <div class="product-card">
-                <h3><?= htmlspecialchars($produto['nome']) ?></h3>
-                <p><?= htmlspecialchars($produto['descricao']) ?></p>
-                <div class="price">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></div>
-                <a href="produto.php?id=<?= $produto['id'] ?>" class="btn">Ver Detalhes</a>
+    <div class="main">
+        <div>
+            <header class="headerClass">
+                <div class="icone-container">
+                    <img src="../images/icone_galopes.svg" alt="" class="icone">
+                    <p>Lopes</p>
+                </div>
+                <div class="login-buttons">
+                    <a href="carrinho.php" class="btn">Carrinho</a>
+                    <a href="produto.php" class="btn">Catalogo</a>
+                    <a href="login.php" class="btn">Login</a>
+                    <a href="cadastro.php" class="btn ativo">Cadastrar</a>
+                </div>
+            </header>
+            
+            <div class="image-main">
+                <h1>Agua foda, Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae beatae nulla quidem eveniet  ullam eius repellat quis?
+                bottom text</h1>
+                <img src="../images/back.png" alt="" class="page-image">
             </div>
-            <?php endwhile; ?>
+        
+        
+        
+            <div class="container">
+                
+                
+                <div class="product-list">
+                    <?php while($produto = $result->fetch_assoc()): ?>
+                    <div class="product-card">
+                        <h3><?= htmlspecialchars($produto['nome']) ?></h3>
+                        <p><?= htmlspecialchars($produto['descricao']) ?></p>
+                        <div class="price">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></div>
+                        <a href="produto.php?id=<?= $produto['id'] ?>" class="btn">Ver Detalhes</a>
+                    </div>
+                    <?php endwhile; ?>
+                </div>
+            </div>
         </div>
+
+        <section class="about">
+            <h1>Sobre nós</h1>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Placeat dolorum voluptatem omnis fugiat rerum! Nam odit aliquid deserunt architecto accusamus suscipit perspiciatis. Nemo velit recusandae cumque molestiae officiis amet magnam?</p>
+        </section>
+
+
+        <footer>hello</footer>
     </div>
+
 </body>
 </html>
 <?php $conn->close(); ?>
