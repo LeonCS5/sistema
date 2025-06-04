@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     if (!empty($login) && !empty($senha)) {
         $conn = connect_db();
-        $sql = "SELECT id, senha, is_admin FROM usuarios WHERE login = ?";
+        $sql = "SELECT id, senha,nome, is_admin, imagem FROM usuarios WHERE login = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('s', $login);
         $stmt->execute();
@@ -22,12 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($usuario = $result->fetch_assoc()) {
             if (password_verify($senha, $usuario['senha'])) {
                 $_SESSION['user_id'] = $usuario['id'];
+                $_SESSION['nome'] = $usuario['nome'];
+                $_SESSION['imagem'] = $usuario['imagem'];
                 $_SESSION['is_admin'] = (bool)$usuario['is_admin'];
                 
                 if ($usuario['is_admin']) {
                     redirect('../admin/index.php');
                 } else {
-                    redirect('../user/index.php');
+                    redirect('index.php');
                 }
             }
         }

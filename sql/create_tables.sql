@@ -253,6 +253,7 @@ CREATE TABLE usuarios (
     nome VARCHAR(100) NOT NULL,
     endereco TEXT NOT NULL,
     forma_pagamento VARCHAR(50) NOT NULL,
+    imagem VARCHAR (255),
     is_admin BOOLEAN DEFAULT 0
 );
 
