@@ -45,7 +45,7 @@ $carrinho = [];
 $total = 0;
 if (isset($_SESSION['carrinho']) && is_array($_SESSION['carrinho'])) {
     foreach ($_SESSION['carrinho'] as $produto_id => $quantidade) {
-        $sql = "SELECT id, nome, preco FROM produtos WHERE id = $produto_id";
+        $sql = "SELECT id, nome, preco,imagem FROM produtos WHERE id = $produto_id";
         $result = $conn->query($sql);
         if ($produto = $result->fetch_assoc()) {
             $subtotal = $produto['preco'] * $quantidade;
@@ -54,6 +54,7 @@ if (isset($_SESSION['carrinho']) && is_array($_SESSION['carrinho'])) {
                 'id' => $produto['id'],
                 'nome' => $produto['nome'],
                 'preco' => $produto['preco'],
+                'imagem' => $produto['imagem'],
                 'quantidade' => $quantidade,
                 'subtotal' => $subtotal
             ];
@@ -66,76 +67,112 @@ if (isset($_SESSION['carrinho']) && is_array($_SESSION['carrinho'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrinho de Compras</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
-        .container { width: 80%; margin: 20px auto; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: #f2f2f2; }
-        .total { text-align: right; font-size: 1.2em; font-weight: bold; margin: 20px 0; }
-        .btn { background: #3498db; color: white; border: none; padding: 8px 15px; border-radius: 3px; cursor: pointer; text-decoration: none; display: inline-block; }
-        .btn:hover { background: #2980b9; }
-        .btn-danger { background: #e74c3c; }
-        .btn-danger:hover { background: #c0392b; }
-        .btn-success { background: #2ecc71; }
-        .btn-success:hover { background: #27ae60; }
-        .message { padding: 10px; margin-bottom: 20px; border-radius: 3px; }
-        .success { background: #d4edda; color: #155724; }
-        .error { background: #f8d7da; color: #721c24; }
-        .cart-actions { display: flex; justify-content: space-between; }
-    </style>
+    <title>Carrinho</title>
+    <link rel="icon" href="../images/icone_galopes.svg" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/index.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Carrinho de Compras</h1>
+    <div class="main main-carrinho">
         
-        <?php if (isset($_SESSION['mensagem'])): ?>
-            <div class="message success"><?= $_SESSION['mensagem'] ?></div>
-            <?php unset($_SESSION['mensagem']); ?>
-        <?php endif; ?>
-        
-        <?php if (isset($_SESSION['erro'])): ?>
-            <div class="message error"><?= $_SESSION['erro'] ?></div>
-            <?php unset($_SESSION['erro']); ?>
-        <?php endif; ?>
-        
-        <?php if (empty($carrinho)): ?>
-            <p>Seu carrinho está vazio.</p>
-            <a href="index.php" class="btn">Continuar Comprando</a>
-        <?php else: ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Produto</th>
-                        <th>Preço Unitário</th>
-                        <th>Quantidade</th>
-                        <th>Subtotal</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($carrinho as $item): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($item['nome']) ?></td>
-                        <td>R$ <?= number_format($item['preco'], 2, ',', '.') ?></td>
-                        <td><?= $item['quantidade'] ?></td>
-                        <td>R$ <?= number_format($item['subtotal'], 2, ',', '.') ?></td>
-                        <td><a href="carrinho.php?remover=<?= $item['id'] ?>" class="btn btn-danger">Remover</a></td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            
-            <div class="total">
-                Total: R$ <?= number_format($total, 2, ',', '.') ?>
+            <header class="headerClass">
+                <a class="icone-container" href="index.php">
+                    <img src="../images/icone_galopes.svg" alt="" class="icone">
+                    <p class="text-logo"><span>LOPES</span></p>
+                </a>
+                <div class="login-buttons">
+                    <a href="carrinho.php" class="btn">Carrinho</a>
+                    <a href="catalogo.php" class="btn">Catalogo</a>
+                    
+                    <?php if (!is_logged_in()): ?>
+                        <a href="login.php" class="btn">Login</a>
+                        <a href="cadastro.php" class="btn ativo">Cadastrar</a>
+                    <?php else: ?>        
+                        <a href="../user/pedidos.php" class="btn">Meus Pedidos</a>
+
+                        <a href="../logout.php"><img src="../uploads/<?= htmlspecialchars($_SESSION['imagem']) ?>" alt="" class="user-image"></a> 
+
+                    <?php endif; ?>
+                    
+
+                    
+                </div>
+            </header>
+
+            <div class="container container-carrinho">
+                <h1>Carrinho</h1>
+                
+                <?php if (isset($_SESSION['mensagem'])): ?>
+                    <div class="message success"><?= $_SESSION['mensagem'] ?></div>
+                    <?php unset($_SESSION['mensagem']); ?>
+                <?php endif; ?>
+                
+                <?php if (isset($_SESSION['erro'])): ?>
+                    <div class="message error"><?= $_SESSION['erro'] ?></div>
+                    <?php unset($_SESSION['erro']); ?>
+                <?php endif; ?>
+                
+                <?php if (empty($carrinho)): ?>
+                    <p>Seu carrinho está vazio.</p>
+                    <a href="index.php" class="btn">Continuar Comprando</a>
+                <?php else: ?>
+                    <div class="carrinho">
+
+                            <?php foreach ($carrinho as $item): ?>
+                            <div class="items-container">
+                                <div class="info-container">
+                                    <div><img src="../uploads/<?= htmlspecialchars($item['imagem']) ?>" alt="" class="carrinho-imagem"></div>
+                                    <div class="item-info name-sp"><h3>Nome</h3><p><?= htmlspecialchars($item['nome']) ?></p></div>
+                                    <div class="item-info"><h3>Preço</h3><p>R$ <?= number_format($item['preco'], 2, ',', '.') ?></p></div>
+                                    <div class="item-info"><h3>Quantidade</h3><p><?= $item['quantidade'] ?></p></div>
+                                    <div class="item-info"><h3>Total</h3><p>R$ <?= number_format($item['subtotal'], 2, ',', '.') ?></p></div>
+                                </div>
+                                <div ><a href="carrinho.php?remover=<?= $item['id'] ?>" class="btn btn-excluir">Remover</a></div>
+                            </div>
+                            <?php endforeach; ?>
+                        
+                            <div class="total">
+                                Total: R$ <?= number_format($total, 2, ',', '.') ?>
+                            </div>
+                    </div>
+                    
+                    
+                    <div>
+                        <div class="cart-actions">
+                            <a href="index.php" class="btn">Continuar Comprando</a>
+                            <a href="checkout.php" class="btn btn-success">Finalizar Compra</a>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
-            
-            <div class="cart-actions">
-                <a href="index.php" class="btn">Continuar Comprando</a>
-                <a href="checkout.php" class="btn btn-success">Finalizar Compra</a>
-            </div>
-        <?php endif; ?>
+        
+        
+        <div>
+            <footer>
+                    <div class="footer-icones">
+                        <a href="https://web.whatsapp.com/" target="_blank">
+                            <img src="../images/whatsapp.svg" alt="" class="icone icone-footer">
+                        </a>
+                        <a href="https://www.facebook.com/" target="_blank">
+                            <img src="../images/facebook.svg" alt="" class="icone icone-footer">
+                        </a>
+                        <a href="https://www.instagram.com/" target="_blank">
+                            <img src="../images/instagram.svg" alt="" class="icone icone-footer">
+                        </a>
+                    </div>
+                    <div class="flex">
+                        <a href="#main" class="link-footer">Home</a>
+                        <a href="#about" class="link-footer">Sobre nós</a>
+                        <a href="carrinho.php" class="link-footer">Carrinho</a>
+                        <a href="catalogo.php" class="link-footer">Catalogo</a>
+                        <a href="https://web.whatsapp.com/" target="_blank" class="link-footer">Entre em Contato</a>
+                    </div>
+                </footer>
+            <div class="footer-header">Copyright ©2025; Desenvolvido por <span id="dev">Matheus Paulo, Leonam, Lucas</span></div>
+        </div>
+
     </div>
 </body>
 </html>
