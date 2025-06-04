@@ -33,15 +33,15 @@ $result = $conn->query($sql);
                     <p class="text-logo"><span>LOPES</span></p>
                 </a>
                 <div class="login-buttons">
-                    <a href="carrinho.php" class="btn">Carrinho</a>
-                    <a href="catalogo.php" class="btn">Catalogo</a>
+                    <a href="catalogo.php" class="btn">Catálogo</a>
                     
                     <?php if (!is_logged_in()): ?>
+                        <a href="carrinho.php" class="btn">Carrinho</a>
                         <a href="login.php" class="btn">Login</a>
                         <a href="cadastro.php" class="btn ativo">Cadastrar</a>
                     <?php else: ?>        
                         <a href="../user/pedidos.php" class="btn">Meus Pedidos</a>
-
+                        <a href="carrinho.php" class="btn">Carrinho</a>
                         <a href="../logout.php"><img src="../uploads/<?= htmlspecialchars($_SESSION['imagem']) ?>" alt="" class="user-image"></a> 
 
                     <?php endif; ?>
@@ -51,8 +51,8 @@ $result = $conn->query($sql);
                 </div>
             </header>
             
-            <div class="image-main">
-                <h1>Agua <span>foda</span>, Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae beatae nulla quidem eveniet  ullam eius repellat quis?
+            <div class="image-main" id="main">
+                <h1>Agua <span>foda</span>, Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                 bottom text</h1>
                 <img src="../images/back.png" alt="" class="page-image">
             </div>
@@ -61,7 +61,7 @@ $result = $conn->query($sql);
         
             <div class="container">
                 
-                
+    
                 <div class="product-list">
                     <?php while($produto = $result->fetch_assoc()): ?>
                     <div class="product-card">
@@ -81,13 +81,38 @@ $result = $conn->query($sql);
             </div>
         </div>
 
-        <section class="about">
-            <h1>Sobre nós</h1>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Placeat dolorum voluptatem omnis fugiat rerum! Nam odit aliquid deserunt architecto accusamus suscipit perspiciatis. Nemo velit recusandae cumque molestiae officiis amet magnam?</p>
+        <section class="about container" id="about">
+            <div class="about-text">
+                <img src="../images/back.png" alt="" class="page-image">
+                <div>
+                    <h1>Sobre nós</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Placeat dolorum voluptatem omnis fugiat rerum! Nam odit aliquid deserunt architecto accusamus suscipit perspiciatis. Nemo velit recusandae cumque molestiae officiis amet magnam?</p>
+                </div>
+            </div>
         </section>
 
 
-        <footer>hello</footer>
+        <footer>
+            <div class="footer-icones">
+                <a href="https://web.whatsapp.com/" target="_blank">
+                    <img src="../images/whatsapp.svg" alt="" class="icone icone-footer">
+                </a>
+                <a href="https://www.facebook.com/" target="_blank">
+                    <img src="../images/facebook.svg" alt="" class="icone icone-footer">
+                </a>
+                <a href="https://www.instagram.com/" target="_blank">
+                    <img src="../images/instagram.svg" alt="" class="icone icone-footer">
+                </a>
+            </div>
+            <div class="flex">
+                <a href="#main" class="link-footer">Home</a>
+                <a href="#about" class="link-footer">Sobre nós</a>
+                <a href="carrinho.php" class="link-footer">Carrinho</a>
+                <a href="catalogo.php" class="link-footer">Catalogo</a>
+                <a href="https://web.whatsapp.com/" target="_blank" class="link-footer">Entre em Contato</a>
+            </div>
+        </footer>
+        <div class="footer-header">Copyright ©2025; Desenvolvido por <span id="dev">Matheus Paulo, Leonam, Lucas</span></div>
     </div>
 
 </body>
