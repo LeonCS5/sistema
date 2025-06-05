@@ -39,7 +39,7 @@ $result = $conn->query($sql);
 <body>
     <div class="container">
         <h1>Meus Pedidos</h1>
-        <a href="index.php" class="btn">&larr; Voltar</a>
+        <a href="../public/index.php" class="btn">&larr; Voltar</a>
         
         <?php if ($result->num_rows > 0): ?>
             <table>

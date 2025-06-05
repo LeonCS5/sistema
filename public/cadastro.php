@@ -2,6 +2,8 @@
 // sistema/public/cadastro.php
 require '../config.php';
 
+
+
 if (is_logged_in()) {
     redirect(is_admin() ? '../admin/index.php' : '../user/index.php');
 }
@@ -13,6 +15,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome = trim($_POST['nome']);
     $endereco = trim($_POST['endereco']);
     $forma_pagamento = trim($_POST['forma_pagamento']);
+
+    $imagem_nome = null;
+    if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === 0) {
+        $extensao = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
+        $imagem_nome = uniqid() . "." . $extensao;
+        $destino = "../uploads/" . $imagem_nome;
+        move_uploaded_file($_FILES['imagem']['tmp_name'], $destino);
+    }
+    
     
     if (!empty($login) && !empty($senha) && !empty($nome) && !empty($endereco) && !empty($forma_pagamento)) {
         $conn = connect_db();
@@ -28,9 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $erro = 'Este login já está em uso.';
         } else {
             $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO usuarios (login, senha, nome, endereco, forma_pagamento) VALUES (?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO usuarios (login, senha, nome, endereco, forma_pagamento, imagem) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('sssss', $login, $senha_hash, $nome, $endereco, $forma_pagamento);
+            $stmt->bind_param('ssssss', $login, $senha_hash, $nome, $endereco, $forma_pagamento, $imagem_nome);
             
             if ($stmt->execute()) {
                 $_SESSION['mensagem'] = 'Cadastro realizado com sucesso! Faça login para continuar.';
@@ -73,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="error"><?= $erro ?></div>
         <?php endif; ?>
         
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="login">Login:</label>
                 <input type="text" id="login" name="login" required>
@@ -102,6 +113,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <option value="Boleto">Boleto Bancário</option>
                     <option value="PIX">PIX</option>
                 </select>
+            </div>
+
+            <div class="form-group">
+                <label>Imagem:</label>
+                <div id="drop-area">
+                    <input type="file" id="imagem" name="imagem" accept="image/*">
+                </div>
             </div>
             
             <button type="submit" class="btn">Cadastrar</button>

@@ -13,6 +13,14 @@ function redirect($url) {
     exit;
 }
 
+function debug_to_console($data) {
+    $output = $data;
+    if (is_array($output))
+        $output = implode(',', $output);
+
+    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+}
+
 function is_logged_in() {
     return isset($_SESSION['user_id']);
 }

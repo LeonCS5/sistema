@@ -1,0 +1,21 @@
+ .container-catalogo{
+    display: flex;
+    flex-direction: column;
+    padding: 30px 60px 60px 60px;
+    
+ }
+
+ .container-catalogo h1{
+    margin-bottom: 20px;
+ }
+
+ .products-catalogo { 
+    display: flex;
+    gap: 20px;
+    overflow: hidden;
+}
+
+.catalogo-imagem{
+    width: 100px;
+    border-radius: 5px;
+}
