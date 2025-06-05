@@ -73,6 +73,7 @@ if (isset($_SESSION['carrinho']) && is_array($_SESSION['carrinho'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/carrinho.css">
 </head>
 <body>
     <div class="main main-carrinho">
@@ -83,15 +84,16 @@ if (isset($_SESSION['carrinho']) && is_array($_SESSION['carrinho'])) {
                     <p class="text-logo"><span>LOPES</span></p>
                 </a>
                 <div class="login-buttons">
-                    <a href="carrinho.php" class="btn">Carrinho</a>
                     <a href="catalogo.php" class="btn">Catalogo</a>
                     
                     <?php if (!is_logged_in()): ?>
+                        <a href="carrinho.php" class="btn">Carrinho</a>
                         <a href="login.php" class="btn">Login</a>
                         <a href="cadastro.php" class="btn ativo">Cadastrar</a>
-                    <?php else: ?>        
-                        <a href="../user/pedidos.php" class="btn">Meus Pedidos</a>
-
+                        <?php else: ?>        
+                            <a href="../user/pedidos.php" class="btn">Meus Pedidos</a>
+                            
+                            <a href="carrinho.php" class="btn">Carrinho</a>
                         <a href="../logout.php"><img src="../uploads/<?= htmlspecialchars($_SESSION['imagem']) ?>" alt="" class="user-image"></a> 
 
                     <?php endif; ?>
@@ -102,50 +104,57 @@ if (isset($_SESSION['carrinho']) && is_array($_SESSION['carrinho'])) {
             </header>
 
             <div class="container container-carrinho">
-                <h1>Carrinho</h1>
-                
-                <?php if (isset($_SESSION['mensagem'])): ?>
-                    <div class="message success"><?= $_SESSION['mensagem'] ?></div>
-                    <?php unset($_SESSION['mensagem']); ?>
-                <?php endif; ?>
-                
-                <?php if (isset($_SESSION['erro'])): ?>
-                    <div class="message error"><?= $_SESSION['erro'] ?></div>
-                    <?php unset($_SESSION['erro']); ?>
-                <?php endif; ?>
-                
-                <?php if (empty($carrinho)): ?>
-                    <p>Seu carrinho está vazio.</p>
-                    <a href="index.php" class="btn">Continuar Comprando</a>
-                <?php else: ?>
-                    <div class="carrinho">
-
-                            <?php foreach ($carrinho as $item): ?>
-                            <div class="items-container">
-                                <div class="info-container">
-                                    <div><img src="../uploads/<?= htmlspecialchars($item['imagem']) ?>" alt="" class="carrinho-imagem"></div>
-                                    <div class="item-info name-sp"><h3>Nome</h3><p><?= htmlspecialchars($item['nome']) ?></p></div>
-                                    <div class="item-info"><h3>Preço</h3><p>R$ <?= number_format($item['preco'], 2, ',', '.') ?></p></div>
-                                    <div class="item-info"><h3>Quantidade</h3><p><?= $item['quantidade'] ?></p></div>
-                                    <div class="item-info"><h3>Total</h3><p>R$ <?= number_format($item['subtotal'], 2, ',', '.') ?></p></div>
-                                </div>
-                                <div ><a href="carrinho.php?remover=<?= $item['id'] ?>" class="btn btn-excluir">Remover</a></div>
-                            </div>
-                            <?php endforeach; ?>
+                <div class="produtos-carrinho">
+                    
+                    <?php if (isset($_SESSION['mensagem'])): ?>
+                        <!-- <div class="message success"><?= $_SESSION['mensagem'] ?></div> -->
+                        <?php unset($_SESSION['mensagem']); ?>
+                        <?php endif; ?>
                         
-                            <div class="total">
-                                Total: R$ <?= number_format($total, 2, ',', '.') ?>
-                            </div>
-                    </div>
+                        <?php if (isset($_SESSION['erro'])): ?>
+                        <h1>Carrinho</h1>
+                        <div class="message error"><?= $_SESSION['erro'] ?></div>
+                        <?php unset($_SESSION['erro']); ?>
+                    <?php endif; ?>
                     
-                    
-                    <div>
-                        <div class="cart-actions">
-                            <a href="index.php" class="btn">Continuar Comprando</a>
-                            <a href="checkout.php" class="btn btn-success">Finalizar Compra</a>
+                    <?php if (empty($carrinho)): ?>
+                        <p>Seu carrinho está vazio.</p>
+                        <a href="index.php" class="btn">Continuar Comprando</a>
+                    <?php else: ?>
+                        <div class="carrinho">
+                                <h1>Carrinho</h1>
+                                <?php foreach ($carrinho as $item): ?>
+                                <div class="items-container">
+                                    <div class="info-container">
+                                        <div><img src="../uploads/<?= htmlspecialchars($item['imagem']) ?>" alt="" class="carrinho-imagem"></div>
+                                        <div class="item-info name-sp"><h3>Nome</h3><p><?= htmlspecialchars($item['nome']) ?></p></div>
+                                        <div class="item-info"><h3>Preço</h3><p>R$ <?= number_format($item['preco'], 2, ',', '.') ?></p></div>
+                                        <div class="item-info"><h3>Quantidade</h3><p><?= $item['quantidade'] ?></p></div>
+                                        <div class="item-info"><h3>Total</h3><p>R$ <?= number_format($item['subtotal'], 2, ',', '.') ?></p></div>
+                                    </div>
+                                    <div ><a href="carrinho.php?remover=<?= $item['id'] ?>" class="btn btn-excluir">Remover</a></div>
+                                </div>
+                                <?php endforeach; ?>
+                            
+                                <div class="total">
+                                    Total: R$ <?= number_format($total, 2, ',', '.') ?>
+                                </div>
                         </div>
-                    </div>
-                <?php endif; ?>
+                        
+                        
+                        <div>
+                            <div class="cart-actions">
+                                <a href="index.php" class="btn">Continuar Comprando</a>
+                                <a href="checkout.php" class="btn btn-success">Finalizar Compra</a>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                </div>
+        
+
+                
+                
             </div>
         
         
