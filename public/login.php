@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             <form method="post">
                 <div class="form-group">
-                    <label for="login">Login:</label>
+                    <label for="login">Usuário:</label>
                     <input type="text" id="login" name="login" required>
                 </div>
                 

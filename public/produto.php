@@ -7,14 +7,47 @@ if (!isset($_GET['id'])) {
 }
 
 $conn = connect_db();
+
+// Adicionar produto ao carrinho
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['produto_id'], $_POST['quantidade'])) {
+    $produto_id_r = (int)$_POST['produto_id'];
+    $quantidade_r = (int)$_POST['quantidade'];
+    
+    // Verificar se o produto existe e está disponível
+    $sql_r = "SELECT id, nome, preco, quantidade FROM produtos WHERE id = $produto_id_r AND disponivel = 1";
+    $result_r = $conn->query($sql_r);
+    $produto_r = $result_r->fetch_assoc();
+    
+    if ($produto_r && $quantidade_r > 0 && $quantidade_r <= $produto_r['quantidade']) {
+        if (!isset($_SESSION['carrinho'])) {
+            $_SESSION['carrinho'] = [];
+        }
+        
+        if (isset($_SESSION['carrinho'][$produto_id_r])) {
+            $_SESSION['carrinho'][$produto_id_r] += $quantidade_r;
+        } else {
+            $_SESSION['carrinho'][$produto_id_r] = $quantidade_r;
+        }
+        
+        $_SESSION['mensagem'] = 'Produto adicionado ao carrinho!';
+    } else {
+        $_SESSION['erro'] = 'Não foi possível adicionar o produto ao carrinho.';
+    }
+
+}
+    
 $id = $conn->real_escape_string($_GET['id']);
 $sql = "SELECT id, nome, descricao, preco, imagem FROM produtos WHERE id = $id AND disponivel = 1";
 $result = $conn->query($sql);
 $produto = $result->fetch_assoc();
-
+    
+$sql = "SELECT id, nome, descricao, preco, imagem FROM produtos WHERE disponivel = 1";
+$result_pd = $conn->query($sql);
+    
 if (!$produto) {
-    redirect('index.php');
+        redirect('index.php');
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -22,44 +55,67 @@ if (!$produto) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($produto['nome']) ?></title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
-        .container { width: 80%; margin: 20px auto; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        .product-detail { display: flex; gap: 30px; flex-wrap: wrap; }
-        .product-image { flex: 1; background: #f9f9f9; min-height: 300px; display: flex; align-items: center; justify-content: center; border: 1px solid #ddd; padding: 10px; }
-        .product-image img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .product-info { flex: 2; }
-        .price { font-size: 1.5em; color: #e74c3c; font-weight: bold; margin: 20px 0; }
-        .btn { background: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 3px; cursor: pointer; text-decoration: none; display: inline-block; }
-        .btn:hover { background: #2980b9; }
-        .back-link { display: inline-block; margin-top: 20px; }
-    </style>
+    <link rel="icon" href="../images/icone_galopes.svg" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/produtos.css">
 </head>
 <body>
-    <div class="container">
-        <a href="index.php" class="back-link">&larr; Voltar</a>
-        <div class="product-detail">
-            <div class="product-image">
-                <?php if (!empty($produto['imagem'])): ?>
-                    <img src="../uploads/<?= htmlspecialchars($produto['imagem']) ?>" alt="Imagem de <?= htmlspecialchars($produto['nome']) ?>">
-                <?php else: ?>
-                    <span>Imagem indisponível</span>
-                <?php endif; ?>
+
+    <div class="main">
+
+        <?php include '../components/header.php';?>
+
+        <div class="container">
+            <div class="product-detail">
+                <div class="product-image">
+                    <?php if (!empty($produto['imagem'])): ?>
+                        <img src="../uploads/<?= htmlspecialchars($produto['imagem']) ?>" alt="Imagem de <?= htmlspecialchars($produto['nome']) ?>">
+                    <?php else: ?>
+                        <span>Imagem indisponível</span>
+                    <?php endif; ?>
+                </div>
+                <div class="prod-info">
+                    <h1><?= htmlspecialchars($produto['nome']) ?></h1>
+                    <p><?= htmlspecialchars($produto['descricao']) ?></p>
+                    <div class="price"><p>R$ <?= number_format($produto['preco'], 2, ',', '.') ?></p></div>
+                    
+                    <form action="" method="post">
+                        <input type="hidden" name="produto_id" value="<?= $produto['id'] ?>">
+                        <label for="quantidade">Quantidade:</label>
+                        <input type="number" id="quantidade" name="quantidade" min="1" value="1" required>
+                        <button type="submit" class="btn">Adicionar ao Carrinho</button>
+                    </form>
+                </div>
             </div>
-            <div class="product-info">
-                <h1><?= htmlspecialchars($produto['nome']) ?></h1>
-                <p><?= htmlspecialchars($produto['descricao']) ?></p>
-                <div class="price">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></div>
-                
-                <form action="carrinho.php" method="post">
-                    <input type="hidden" name="produto_id" value="<?= $produto['id'] ?>">
-                    <label for="quantidade">Quantidade:</label>
-                    <input type="number" id="quantidade" name="quantidade" min="1" value="1" required>
-                    <button type="submit" class="btn">Adicionar ao Carrinho</button>
-                </form>
+            <div><h1>Sugestões</h1></div>
+            <div class="product-list">
+                    <?php while($produto = $result_pd->fetch_assoc()): ?>
+                    <div class="product-card">
+                        <img src="../uploads/<?= htmlspecialchars($produto['imagem']) ?>" alt="" class="produto-image">
+                        <div class="product-info">
+                            <p class="name-product"><?= htmlspecialchars($produto['nome']) ?></h3>
+                            <h3><?= htmlspecialchars($produto['descricao']) ?></p>
+                            <div class="price">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></div>
+                            <a href="produto.php?id=<?= $produto['id'] ?>" class="btn pd ativo">
+                                <p class="text-product">PEDIR</p>
+                                <img src="../images/cart.svg" alt="" class="cart-icon">
+                            </a>
+                        </div>
+                    </div>
+                    <?php endwhile; ?>
             </div>
+
         </div>
+
+        <div>
+            <?php include '../components/footer.php';?>
+        </div>
+
     </div>
+
 </body>
 </html>
 <?php $conn->close(); ?>

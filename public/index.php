@@ -22,6 +22,7 @@ $result = $conn->query($sql);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/effecs.css">
 
 </head>
 <body>
@@ -50,7 +51,7 @@ $result = $conn->query($sql);
                             <h3><?= htmlspecialchars($produto['descricao']) ?></p>
                             <div class="price">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></div>
                             <a href="produto.php?id=<?= $produto['id'] ?>" class="btn pd ativo">
-                                <p>PEDIR</p>
+                                <p class="text-product">PEDIR</p>
                                 <img src="../images/cart.svg" alt="" class="cart-icon">
                             </a>
                         </div>

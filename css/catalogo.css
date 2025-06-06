@@ -5,13 +5,17 @@
     
  }
 
- .container-catalogo p{
-    margin-bottom: 10px;
+ .container-catalogo h1 {
+   color: var(--primary-1);
  }
+
+
+
 
  .products-catalogo { 
    display: flex;
    flex-wrap: wrap;
+   margin-top: 10px;
    justify-content: start;
    gap: 20px;
    overflow: hidden;
@@ -20,6 +24,12 @@
 .catalogo-imagem{
     width: 100px;
     border-radius: 5px;
+}
+
+.price {
+   margin-top: 5px;
+   margin-bottom: 5px;
+   font-weight: bold;
 }
 
 .imagem-div{

@@ -4,32 +4,6 @@ require '../config.php';
 
 $conn = connect_db();
 
-// Adicionar produto ao carrinho
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['produto_id'], $_POST['quantidade'])) {
-    $produto_id = (int)$_POST['produto_id'];
-    $quantidade = (int)$_POST['quantidade'];
-    
-    // Verificar se o produto existe e está disponível
-    $sql = "SELECT id, nome, preco, quantidade FROM produtos WHERE id = $produto_id AND disponivel = 1";
-    $result = $conn->query($sql);
-    $produto = $result->fetch_assoc();
-    
-    if ($produto && $quantidade > 0 && $quantidade <= $produto['quantidade']) {
-        if (!isset($_SESSION['carrinho'])) {
-            $_SESSION['carrinho'] = [];
-        }
-        
-        if (isset($_SESSION['carrinho'][$produto_id])) {
-            $_SESSION['carrinho'][$produto_id] += $quantidade;
-        } else {
-            $_SESSION['carrinho'][$produto_id] = $quantidade;
-        }
-        
-        $_SESSION['mensagem'] = 'Produto adicionado ao carrinho!';
-    } else {
-        $_SESSION['erro'] = 'Não foi possível adicionar o produto ao carrinho.';
-    }
-}
 
 // Remover item do carrinho
 if (isset($_GET['remover'])) {
