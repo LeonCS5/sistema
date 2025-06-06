@@ -54,3 +54,15 @@
 .btn-excluir:hover{
    background: #da2356;
 }
+
+.item-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+    padding: 10px;
+    min-width: 25%;
+    max-width: 25%;
+    border-right: 1px solid #ddd;
+}

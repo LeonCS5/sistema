@@ -47,44 +47,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
-        .container { width: 80%; max-width: 400px; margin: 50px auto; background: white; padding: 30px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { text-align: center; margin-top: 0; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; }
-        input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px; }
-        .btn { width: 100%; padding: 10px; background: #3498db; color: white; border: none; border-radius: 3px; cursor: pointer; }
-        .btn:hover { background: #2980b9; }
-        .error { color: #e74c3c; margin-bottom: 15px; }
-        .register-link { text-align: center; margin-top: 20px; }
-    </style>
+
+    <link rel="icon" href="../images/icone_galopes.svg" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Login</h1>
-        
-        <?php if ($erro): ?>
-            <div class="error"><?= $erro ?></div>
-        <?php endif; ?>
-        
-        <form method="post">
-            <div class="form-group">
-                <label for="login">Login:</label>
-                <input type="text" id="login" name="login" required>
-            </div>
+    <div class="main">
+        <?php include '../components/header.php';?>
+        <div class="container">
+            <h1>Login</h1>
             
-            <div class="form-group">
-                <label for="senha">Senha:</label>
-                <input type="password" id="senha" name="senha" required>
-            </div>
+            <?php if ($erro): ?>
+                <div class="error"><?= $erro ?></div>
+            <?php endif; ?>
             
-            <button type="submit" class="btn">Entrar</button>
-        </form>
-        
-        <div class="register-link">
-            <p>Não tem uma conta? <a href="cadastro.php">Cadastre-se</a></p>
+            <form method="post">
+                <div class="form-group">
+                    <label for="login">Login:</label>
+                    <input type="text" id="login" name="login" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" name="senha" required>
+                </div>
+                <div class="btn-login">
+
+                    <button type="submit" class="btn ativo">Entrar</button>
+                </div>
+            </form>
+            
+            <div class="register-link">
+                <p>Não tem uma conta? <a href="cadastro.php">Cadastre-se</a></p>
+            </div>
+        </div>
+        <div>
+
+            <?php include '../components/footer.php';?>
         </div>
     </div>
+
 </body>
 </html>

@@ -5,17 +5,52 @@
     
  }
 
- .container-catalogo h1{
-    margin-bottom: 20px;
+ .container-catalogo p{
+    margin-bottom: 10px;
  }
 
  .products-catalogo { 
-    display: flex;
-    gap: 20px;
-    overflow: hidden;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: start;
+   gap: 20px;
+   overflow: hidden;
 }
 
 .catalogo-imagem{
     width: 100px;
     border-radius: 5px;
+}
+
+.imagem-div{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.item-card{
+   
+   margin-top: 5px;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   gap: 20px;
+   border: 1px solid #ddd;
+   border-radius: 5px;
+
+   min-width: 180px;
+   padding: 15px;
+   
+   transition: transform 0.3s; 
+}
+
+.item-card:hover { 
+    transform: translateY(-5px); 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+
+
+.product-card h3 { 
+    margin-top: 0; 
 }
