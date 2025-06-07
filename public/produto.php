@@ -37,11 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['produto_id'], $_POST['
 }
     
 $id = $conn->real_escape_string($_GET['id']);
-$sql = "SELECT id, nome, descricao, preco, imagem FROM produtos WHERE id = $id AND disponivel = 1";
+$sql = "SELECT id, nome, descricao, preco, imagem, quantidade FROM produtos WHERE id = $id AND disponivel = 1";
 $result = $conn->query($sql);
 $produto = $result->fetch_assoc();
     
-$sql = "SELECT id, nome, descricao, preco, imagem FROM produtos WHERE disponivel = 1";
+$sql = "SELECT id, nome, descricao, preco, imagem, quantidade FROM produtos WHERE disponivel = 1";
 $result_pd = $conn->query($sql);
     
 if (!$produto) {
@@ -78,20 +78,50 @@ if (!$produto) {
                     <?php endif; ?>
                 </div>
                 <div class="prod-info">
-                    <h1><?= htmlspecialchars($produto['nome']) ?></h1>
-                    <p><?= htmlspecialchars($produto['descricao']) ?></p>
-                    <div class="price"><p>R$ <?= number_format($produto['preco'], 2, ',', '.') ?></p></div>
                     
-                    <form action="" method="post">
-                        <input type="hidden" name="produto_id" value="<?= $produto['id'] ?>">
-                        <label for="quantidade">Quantidade:</label>
-                        <input type="number" id="quantidade" name="quantidade" min="1" value="1" required>
-                        <button type="submit" class="btn">Adicionar ao Carrinho</button>
-                    </form>
+                    <div class="produto-menu">                        
+                        <div class="name-desc">
+                            <h1><?= htmlspecialchars($produto['nome']) ?></h1>
+                            <div class="price"><h3>R$<?= number_format($produto['preco'], 2, ',', '.') ?></h3></div>
+                        </div>
+                        <div class="prod-desc">
+                            <p><?= htmlspecialchars($produto['descricao']) ?></p>
+                        </div>
+                        <?php if ($produto['quantidade'] >= 5): ?>
+                            <p>Em estoque - <?= $produto['quantidade'] ?></p>
+                        <?php elseif($produto['quantidade'] > 0 and $produto['quantidade'] < 5): ?>
+                            <p>Baixo Estoque - <?= $produto['quantidade'] ?></p>
+                        <?php endif; ?>
+                        <input type="hidden" name="produto_id" id="prod_id" value="<?= $produto['id'] ?>">
+                        <select name="quantidade" id="quantidade">
+                            <option value="1">Quantidade</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        
+                        <div class="check-menu">
+                            
+                            <form action="" method="post" id="carrinho">
+                                <button type="submit" class="btn ativo btn-produto">Adicionar ao Carrinho</button>
+                            </form>
+        
+                            <form action="comprar.php" method="post" id="comprar">
+                                <button type="submit" class="btn ativo btn-produto">Comprar Agora</button>
+                            </form>    
+                        </div>
+
+                    </div>
+
+
                 </div>
             </div>
-            <div><h1>Sugestões</h1></div>
+            <hr class="hr-produtos">
+            <div class="sugest"><h2>Sugestões</h1></div>
             <div class="product-list">
+                    
                     <?php while($produto = $result_pd->fetch_assoc()): ?>
                     <div class="product-card">
                         <img src="../uploads/<?= htmlspecialchars($produto['imagem']) ?>" alt="" class="produto-image">
@@ -117,5 +147,7 @@ if (!$produto) {
     </div>
 
 </body>
+
+<script src="../js/checkout.js"></script>
 </html>
 <?php $conn->close(); ?>

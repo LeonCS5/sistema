@@ -19,3 +19,4 @@
         </div>
 </footer>
 <div class="footer-header">Copyright ©2025; Desenvolvido por <span id="dev">Matheus Paulo, Leonam, Lucas</span></div>
+<script src="../js/main.js"></script>

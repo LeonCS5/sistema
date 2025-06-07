@@ -27,7 +27,7 @@ $sql = "SELECT p.id, p.data_hora, p.status, u.nome AS cliente_nome
 $ultimos_pedidos = $conn->query($sql);
 
 // Produtos com baixo estoque
-$sql = "SELECT nome, quantidade FROM produtos WHERE quantidade < 10 ORDER BY quantidade ASC LIMIT 5";
+$sql = "SELECT id,nome, quantidade FROM produtos WHERE quantidade < 10 ORDER BY quantidade ASC LIMIT 5";
 $baixo_estoque = $conn->query($sql);
 ?>
 <!DOCTYPE html>
@@ -130,7 +130,9 @@ $baixo_estoque = $conn->query($sql);
                         <tr>
                             <td><?= htmlspecialchars($produto['nome']) ?></td>
                             <td><?= $produto['quantidade'] ?></td>
-                            <td><a href="editar_produto.php?id=<?= $produto['id'] ?>" class="btn">Editar</a></td>
+                            <td><a href="editar_produto.php?id=<?php echo $produto['id']; ?>">Editar</a></td>
+
+                            
                         </tr>
                         <?php endwhile; ?>
                     </tbody>

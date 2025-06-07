@@ -21,52 +21,51 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meus Pedidos</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
-        .container { width: 80%; margin: 20px auto; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: #f2f2f2; font-weight: bold; }
-        tr:hover { background-color: #f9f9f9; }
-        .status { padding: 5px 10px; border-radius: 3px; font-weight: bold; }
-        .status-recebido { background-color: #3498db; color: white; }
-        .status-enviado { background-color: #f39c12; color: white; }
-        .status-entregado { background-color: #2ecc71; color: white; }
-        .btn { background: #3498db; color: white; border: none; padding: 8px 15px; border-radius: 3px; cursor: pointer; text-decoration: none; display: inline-block; }
-        .btn:hover { background: #2980b9; }
-    </style>
+    <link rel="icon" href="../images/icone_galopes.svg" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/pedidos.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Meus Pedidos</h1>
-        <a href="../public/index.php" class="btn">&larr; Voltar</a>
+    <div class="main">
+        <?php include '../components/header.php';?>
         
-        <?php if ($result->num_rows > 0): ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nº Pedido</th>
-                        <th>Data/Hora</th>
-                        <th>Status</th>
-                        <th>Total</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while($pedido = $result->fetch_assoc()): ?>
-                    <tr>
-                        <td>#<?= $pedido['id'] ?></td>
-                        <td><?= date('d/m/Y H:i', strtotime($pedido['data_hora'])) ?></td>
-                        <td><span class="status status-<?= strtolower($pedido['status']) ?>"><?= $pedido['status'] ?></span></td>
-                        <td>R$ <?= number_format($pedido['total'], 2, ',', '.') ?></td>
-                        <td><a href="detalhes_pedido.php?id=<?= $pedido['id'] ?>" class="btn">Detalhes</a></td>
-                    </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </table>
-        <?php else: ?>
-            <p>Nenhum pedido encontrado.</p>
-        <?php endif; ?>
+        <div class="container">
+            <h1>Meus Pedidos</h1>
+            
+            <?php if ($result->num_rows > 0): ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nº Pedido</th>
+                            <th>Data/Hora</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while($pedido = $result->fetch_assoc()): ?>
+                        <tr>
+                            <td>#<?= $pedido['id'] ?></td>
+                            <td><?= date('d/m/Y H:i', strtotime($pedido['data_hora'])) ?></td>
+                            <td><span class="status status-<?= strtolower($pedido['status']) ?>"><?= $pedido['status'] ?></span></td>
+                            <td>R$ <?= number_format($pedido['total'], 2, ',', '.') ?></td>
+                            <td><a href="detalhes_pedido.php?id=<?= $pedido['id'] ?>" class="btn">Detalhes</a></td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <p>Nenhum pedido encontrado.</p>
+            <?php endif; ?>
+        </div>
+
+        <div>
+            <?php include '../components/footer.php';?>
+        </div>
     </div>
 </body>
 </html>

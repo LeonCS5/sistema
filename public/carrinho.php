@@ -70,7 +70,7 @@ if (isset($_SESSION['carrinho']) && is_array($_SESSION['carrinho'])) {
                     
                     <?php if (empty($carrinho)): ?>
                         <p>Seu carrinho está vazio.</p>
-                        <a href="index.php" class="btn">Continuar Comprando</a>
+                        <a href="catalogo.php" class="btn">Continuar Comprando</a>
                     <?php else: ?>
                         <div class="carrinho">
                                 <h1>Carrinho</h1>
@@ -95,7 +95,7 @@ if (isset($_SESSION['carrinho']) && is_array($_SESSION['carrinho'])) {
                         
                         <div>
                             <div class="cart-actions">
-                                <a href="index.php" class="btn">Continuar Comprando</a>
+                                <a href="catalogo.php" class="btn">Continuar Comprando</a>
                                 <a href="checkout.php" class="btn btn-success">Finalizar Compra</a>
                             </div>
                         </div>

@@ -36,4 +36,21 @@ function connect_db() {
     }
     return $conn;
 }
+
+function add_svg($path, $class, $sp){
+    $svg = file_get_contents($path);
+        // Adiciona a classe dentro da tag <svg>
+    $class = '<svg class="' . $class . '"';
+    $svg = str_replace('<svg', $class, $svg);
+    $svg = preg_replace('/stroke="[^"]*"/i', 'stroke="currentColor"', $svg);
+    
+    if($sp){
+        $svg = preg_replace('/fill="[^"]*"/i', '', $svg);
+        $svg = preg_replace("/fill='[^']*'/i", '', $svg);
+    }
+
+    return  $svg;
+
+}
+
 ?>

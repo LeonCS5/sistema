@@ -24,6 +24,8 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/effecs.css">
 
+    
+
 </head>
 <body>
 
@@ -78,5 +80,6 @@ $result = $conn->query($sql);
     </div>
 
 </body>
+<script src="../js/main.js"></script>
 </html>
 <?php $conn->close(); ?>

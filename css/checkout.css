@@ -1,0 +1,21 @@
+        
+        .container { width: 50%; margin: 20px auto; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        form { display: grid; gap: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px; }
+        .message { padding: 10px; margin-bottom: 20px; border-radius: 3px; }
+        .error { background: #f8d7da; color: #721c24; }
+        .cart-summary { background: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        .cart-item { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee; }
+        .cart-total { font-weight: bold; font-size: 1.2em; text-align: right; margin-top: 10px; }
+
+
+
+.btn-checkout{
+    border-radius: 5px;
+}
+
+
+.container h1 {
+    margin-bottom: 10px;
+}

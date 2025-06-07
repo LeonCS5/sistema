@@ -18,7 +18,7 @@ body {
     background-color: var(--neutral-100);
 }
 
-h1,h2,h3, p, label {
+h1,h2,h3, p, label, td,th, ul, li {
     color: var(--neutral-700);
 }
 
@@ -127,6 +127,9 @@ h1,h2,h3, p, label {
 
 .icone {
     width: 44px;
+    height: auto;
+    display: block;
+    fill: var(--primary-1);
 }
 
 .icone-container {
@@ -242,6 +245,13 @@ footer {
     margin-left: 5px;
 }
 
+select { 
+    width: 100%; 
+    padding: 8px; 
+    border: 1px solid #ddd; 
+    border-radius: 3px; 
+}
+
 .product-card {
     display: flex;
     flex-direction: column;
@@ -321,7 +331,11 @@ span {
 
 .header-icon{
     width: 22px;
-    filter: brightness(0) saturate(100%) invert(39%) sepia(84%) saturate(409%) hue-rotate(160deg) brightness(98%) contrast(99%);
+    height: auto;
+    display: block;
+    color: var(--primary-1);
+    
+    
 }
 
 .btn-carrinho { 
