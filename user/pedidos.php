@@ -7,7 +7,7 @@ if (!is_logged_in() || is_admin()) {
 }
 
 $conn = connect_db();
-$sql = "SELECT p.id, p.data_hora, p.status, SUM(pi.quantidade * pi.preco_unitario) AS total 
+$sql = "SELECT p.id, p.data_hora, p.status, p.cliente_nome, SUM(pi.quantidade * pi.preco_unitario) AS total 
         FROM pedidos p
         JOIN pedido_itens pi ON p.id = pi.pedido_id
         WHERE p.usuario_id = " . $_SESSION['user_id'] . "
@@ -53,6 +53,7 @@ $result = $conn->query($sql);
                             <td><?= date('d/m/Y H:i', strtotime($pedido['data_hora'])) ?></td>
                             <td><span class="status status-<?= strtolower($pedido['status']) ?>"><?= $pedido['status'] ?></span></td>
                             <td>R$ <?= number_format($pedido['total'], 2, ',', '.') ?></td>
+                            <td><?= htmlspecialchars($pedido['cliente_nome']) ?></td>
                             <td><a href="detalhes_pedido.php?id=<?= $pedido['id'] ?>" class="btn">Detalhes</a></td>
                         </tr>
                         <?php endwhile; ?>

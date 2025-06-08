@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2025 at 02:07 AM
+-- Generation Time: Jun 08, 2025 at 06:10 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -16,9 +16,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
-
-CREATE DATABASE IF NOT EXISTS sistema;
-USE sistema;
 
 --
 -- Database: `sistema`
@@ -33,6 +30,7 @@ USE sistema;
 CREATE TABLE `pedidos` (
   `id` int(11) NOT NULL,
   `usuario_id` int(11) DEFAULT NULL,
+  `cliente_nome` varchar(100) NOT NULL,
   `data_hora` datetime DEFAULT current_timestamp(),
   `endereco` text NOT NULL,
   `forma_pagamento` varchar(50) NOT NULL,
@@ -44,9 +42,10 @@ CREATE TABLE `pedidos` (
 -- Dumping data for table `pedidos`
 --
 
-INSERT INTO `pedidos` (`id`, `usuario_id`, `data_hora`, `endereco`, `forma_pagamento`, `status`, `status_atualizado_em`) VALUES
-(1, NULL, '2025-06-02 22:42:25', 'rua Carlos 200', 'PIX', 'Entregado', NULL),
-(2, 2, '2025-06-02 22:46:27', 'Rua Carlos De Carvalho 200', 'PIX', 'Entregado', '2025-06-03 04:13:38');
+INSERT INTO `pedidos` (`id`, `usuario_id`, `cliente_nome`, `data_hora`, `endereco`, `forma_pagamento`, `status`, `status_atualizado_em`) VALUES
+(1, NULL, 'Cliente não identificado', '2025-06-02 22:42:25', 'rua Carlos 200', 'PIX', 'Entregado', NULL),
+(2, 2, 'Carl Johnson', '2025-06-02 22:46:27', 'Rua Carlos De Carvalho 200', 'PIX', 'Entregado', '2025-06-03 04:13:38'),
+(3, NULL, 'Cliente não identificado', '2025-06-08 11:31:45', 'rua Carlos 200', 'Dinheiro', 'Recebido', NULL);
 
 -- --------------------------------------------------------
 
@@ -67,7 +66,8 @@ CREATE TABLE `pedido_itens` (
 --
 
 INSERT INTO `pedido_itens` (`id`, `pedido_id`, `produto_id`, `quantidade`, `preco_unitario`) VALUES
-(2, 2, 2, 2, 13.00);
+(2, 2, 2, 2, 13.00),
+(3, 3, 1, 1, 12.00);
 
 -- --------------------------------------------------------
 
@@ -91,7 +91,8 @@ INSERT INTO `pedido_status_historico` (`id`, `pedido_id`, `status`, `data_hora`)
 (2, 2, 'Recebido', '2025-06-02 23:10:33'),
 (3, 2, 'Enviado', '2025-06-02 23:10:37'),
 (4, 2, 'Entregado', '2025-06-02 23:10:40'),
-(5, 2, 'Entregado', '2025-06-02 23:13:38');
+(5, 2, 'Entregado', '2025-06-02 23:13:38'),
+(6, 3, 'Recebido', '2025-06-08 11:32:50');
 
 -- --------------------------------------------------------
 
@@ -114,11 +115,11 @@ CREATE TABLE `produtos` (
 --
 
 INSERT INTO `produtos` (`id`, `nome`, `descricao`, `preco`, `quantidade`, `disponivel`, `imagem`) VALUES
-(1, 'agua cristal 20L', 'agua cristal com 20L', 12.00, 100, 1, '683f8c970fd31_agua_crystal_20L_01_1200.png'),
-(2, 'agua poa 20L', 'agua marca poa com 20L', 13.00, 198, 1, '683f8cb82f6ff_ÁGUAMINERALINDUGAS.webp'),
-(4, 'agua mogiana 20L', 'agua mogiana', 14.00, 100, 1, '683f8c20e23ac.webp'),
-(5, 'agua Rocha Branca 20L', 'agua Rocha  Branca 20L (com vasilhante)', 16.00, 123, 1, '683f8d50ced70.png'),
-(6, 'agua Castelo 20L', 'agua do castelo ratimbum (mijo do etevaldo)', 20.00, 20, 1, '683f8d95b0615.jpg');
+(1, 'agua cristal 20L', 'agua cristal com 20L', 12.00, 99, 1, '68459cf06e627_6844fc5f99d54_6842292e01499_agua_crystal_20L_01_1200-removebg-preview.png'),
+(2, 'agua poa 20L', 'agua marca poa com 20L', 13.00, 198, 1, '6845aae163d76_6844fc4ed3602_6842300ba0bdf_6842292243d96.webp'),
+(4, 'agua mogiana 20L', 'agua mogiana', 14.00, 100, 1, '68459cd39c17b_68423cfd57ac0-removebg-preview.png'),
+(5, 'agua Rocha Branca 20L', 'agua Rocha  Branca 20L (com vasilhante)', 16.00, 123, 1, '68459cffaef59_6842304d75075_6842294395482_20-litros-verde-2.png'),
+(6, 'agua Castelo 20L', 'agua do castelo ratimbum (mijo do etevaldo)', 20.00, 20, 1, '68459cb3780a4_6844fc85a6bc0_68422fc2e2e03_68422937e2c70_ete-removebg-preview.png');
 
 -- --------------------------------------------------------
 
@@ -141,9 +142,10 @@ CREATE TABLE `usuarios` (
 -- Dumping data for table `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `login`, `senha`, `nome`, `endereco`, `forma_pagamento`, `is_admin`) VALUES
-(1, 'admin', '$2y$10$Ca0GOYCdgRxk3dn9Ec.NM.vYKOY6zZ7tvpWpLSjtFE4qDn6v5JaHK', 'Administrador', 'Endereço Admin', 'Cartão', 1),
-(2, 'CJ', '$2y$10$TNS0zkL0I/Y0pIsVhx4AD.zLZ8U99YgRZlNY4kmLT6JUuwc2p9ivG', 'Carl Johnson', 'Rua Carlos De Carvalho 200', 'PIX', 0);
+INSERT INTO `usuarios` (`id`, `login`, `senha`, `nome`, `endereco`, `forma_pagamento`, `imagem`, `is_admin`) VALUES
+(1, 'admin', '$2y$10$Ca0GOYCdgRxk3dn9Ec.NM.vYKOY6zZ7tvpWpLSjtFE4qDn6v5JaHK', 'Administrador', 'Endereço Admin', 'Cartão', '', 1),
+(2, 'CJ', '$2y$10$TNS0zkL0I/Y0pIsVhx4AD.zLZ8U99YgRZlNY4kmLT6JUuwc2p9ivG', 'Carl Johnson', 'Rua Carlos De Carvalho 200', 'PIX', '', 0),
+(3, 'a', '$2y$10$XtrzPFK/AKX9iSrebDfYE.l2qBdPy15PwtcqiH9A9GY1DCiTb9XCi', 'a', 'a', 'PIX', '6845b13b4df2d.jpg', 0);
 
 --
 -- Indexes for dumped tables
@@ -192,19 +194,19 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT for table `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `pedido_itens`
 --
 ALTER TABLE `pedido_itens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `pedido_status_historico`
 --
 ALTER TABLE `pedido_status_historico`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `produtos`
@@ -216,7 +218,7 @@ ALTER TABLE `produtos`
 -- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -245,69 +247,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
--- Tabela de usuários
-CREATE TABLE usuarios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    login VARCHAR(50) NOT NULL UNIQUE,
-    senha VARCHAR(255) NOT NULL,
-    nome VARCHAR(100) NOT NULL,
-    endereco TEXT NOT NULL,
-    forma_pagamento VARCHAR(50) NOT NULL,
-    imagem VARCHAR (255),
-    is_admin BOOLEAN DEFAULT 0
-);
-
--- Tabela de produtos
-CREATE TABLE produtos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    descricao TEXT,
-    preco DECIMAL(10,2) NOT NULL,
-    quantidade INT NOT NULL,
-    imagem VARCHAR (255),
-    disponivel BOOLEAN DEFAULT 1
-    
-);
-
--- Tabela de pedidos
-CREATE TABLE pedidos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT,
-    data_hora DATETIME DEFAULT CURRENT_TIMESTAMP,
-    endereco TEXT NOT NULL,
-    forma_pagamento VARCHAR(50) NOT NULL,
-    status ENUM('Recebido', 'Enviado', 'Entregado') DEFAULT 'Recebido',
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL
-);
-
--- Tabela de itens do pedido
-CREATE TABLE pedido_itens (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    pedido_id INT NOT NULL,
-    produto_id INT NOT NULL,
-    quantidade INT NOT NULL,
-    preco_unitario DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (pedido_id) REFERENCES pedidos(id) ON DELETE CASCADE,
-    FOREIGN KEY (produto_id) REFERENCES produtos(id) ON DELETE CASCADE
-);
-
--- Tabela Status do pedido --
-CREATE TABLE pedido_status_historico (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    pedido_id INT NOT NULL,
-    status VARCHAR(50) NOT NULL,
-    data_hora DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (pedido_id) REFERENCES pedidos(id) ON DELETE CASCADE 
-);
-
--- Inserir um administrador padrão
--- sistema/sql/create_tables.sql (corrigido)
-CREATE DATABASE IF NOT EXISTS sistema;
-USE sistema;
-
--- ... (outras tabelas permanecem iguais) ...
-
--- Corrigindo o admin com senha 'admin123'
-INSERT INTO usuarios (login, senha, nome, endereco, forma_pagamento, is_admin) 
-VALUES ('admin', '$2y$10$Wq2A5bH0z6cZ7q0J1KbV.OU6I7zQ1S9gR1eX0aG3nY8xJ2vN1dW6', 'Administrador', 'Endereço Admin', 'Cartão', 1);

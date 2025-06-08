@@ -7,7 +7,12 @@ if (!is_admin()) {
 }
 
 $conn = connect_db();
-$sql = "SELECT p.id, p.data_hora, p.status, u.nome AS cliente_nome 
+$sql = "SELECT p.id,
+                p.data_hora,
+                p.status,
+                COALESCE(u.nome, p.cliente_nome, 'Cliente não cadastrado') AS cliente_exibir
+                /*p.cliente_nome AS cliente_fallback,
+                //u.nome AS cliente_nome*/ 
         FROM pedidos p
         LEFT JOIN usuarios u ON p.usuario_id = u.id
         ORDER BY p.data_hora DESC";
@@ -51,13 +56,19 @@ $result = $conn->query($sql);
                 </thead>
                 <tbody>
                     <?php while($pedido = $result->fetch_assoc()): ?>
-                    <tr>
+                      <tr>
                         <td>#<?= $pedido['id'] ?></td>
                         <td><?= date('d/m/Y H:i', strtotime($pedido['data_hora'])) ?></td>
-                        <td><?= $pedido['cliente_nome'] ? htmlspecialchars($pedido['cliente_nome']) : 'Cliente não cadastrado' ?></td>
-                        <td><span class="status status-<?= strtolower($pedido['status']) ?>"><?= $pedido['status'] ?></span></td>
-                        <td><a href="detalhes_pedido.php?id=<?= $pedido['id'] ?>" class="btn">Detalhes</a></td>
-                    </tr>
+                        <td><?= htmlspecialchars($pedido['cliente_exibir']) ?></td>
+                        <td>
+                          <span class="status status-<?= strtolower($pedido['status']) ?>">
+                            <?= htmlspecialchars($pedido['status']) ?>
+                          </span>
+                        </td>
+                        <td>
+                          <a href="detalhes_pedido.php?id=<?= $pedido['id'] ?>" class="btn">Detalhes</a>
+                        </td>
+                      </tr>
                     <?php endwhile; ?>
                 </tbody>
             </table>
