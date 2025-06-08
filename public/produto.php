@@ -1,3 +1,4 @@
+<script src="../js/popup.js"></script>
 <?php
 // sistema/public/produto.php
 require '../config.php';
@@ -7,6 +8,7 @@ if (!isset($_GET['id'])) {
 }
 
 $conn = connect_db();
+
 
 // Adicionar produto ao carrinho
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['produto_id'], $_POST['quantidade'])) {
@@ -30,7 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['produto_id'], $_POST['
         }
         
         $_SESSION['mensagem'] = 'Produto adicionado ao carrinho!';
+        popup_show('Produto adicionado ao carrinho!', "popup-sucess");
     } else {
+        popup_show('Não foi possível adicionar o produto ao carrinho.', "popup-fail");
         $_SESSION['erro'] = 'Não foi possível adicionar o produto ao carrinho.';
     }
 
@@ -149,5 +153,6 @@ if (!$produto) {
 </body>
 
 <script src="../js/checkout.js"></script>
+
 </html>
 <?php $conn->close(); ?>

@@ -1,3 +1,4 @@
+<script src="../js/popup.js"></script>
 <?php
 // sistema/public/login.php
 require '../config.php';
@@ -34,10 +35,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
         
-        $erro = 'Login ou senha incorretos.';
+        
+        popup_show('Login ou senha incorretos.', "popup-fail");
         $conn->close();
     } else {
-        $erro = 'Preencha todos os campos.';
+        popup_show('Preencha todos os compos.', "popup-fail");
+        
     }
 }
 ?>
@@ -62,9 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="container">
             <h1>Login</h1>
             
-            <?php if ($erro): ?>
-                <div class="error"><?= $erro ?></div>
-            <?php endif; ?>
             
             <form method="post">
                 <div class="form-group">

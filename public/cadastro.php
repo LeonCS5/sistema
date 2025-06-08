@@ -1,8 +1,7 @@
+<script src="../js/popup.js"></script>
 <?php
 // sistema/public/cadastro.php
 require '../config.php';
-
-
 
 if (is_logged_in()) {
     redirect(is_admin() ? '../admin/index.php' : '../user/index.php');
@@ -44,16 +43,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->bind_param('ssssss', $login, $senha_hash, $nome, $endereco, $forma_pagamento, $imagem_nome);
             
             if ($stmt->execute()) {
-                $_SESSION['mensagem'] = 'Cadastro realizado com sucesso! Faça login para continuar.';
-                redirect('login.php');
+                popup_show('Cadastro realizado com sucesso! Faça login para continuar.', "popup-sucess");
+                
             } else {
-                $erro = 'Erro ao cadastrar usuário.';
+                popup_show('Erro ao cadastrar usuário', "popup-fail");
+                
             }
         }
         
         $conn->close();
     } else {
-        $erro = 'Preencha todos os campos.';
+        popup_show('Preencha todos os campos.', "popup-fail");
     }
 }
 ?>
@@ -77,10 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <?php include '../components/header.php';?>
         <div class="container">
             <h1>Cadastro</h1>
-            
-            <?php if ($erro): ?>
-                <div class="error"><?= $erro ?></div>
-            <?php endif; ?>
             
             <form method="post" enctype="multipart/form-data">
                 <div class="form-group">

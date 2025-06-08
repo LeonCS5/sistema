@@ -8,15 +8,64 @@
     --neutral-500: #969daa;
     --neutral-600: #656b89;
     --neutral-700: #26395c;
+
+    
+    --dark-100: #e2e2e2;
+    --dark-200: #939393;
+    --dark-300: #1d1d1d;
+    --dark-400: #121212;
+
   
-  --primary-1: #2980b9;
+  --primary-1: #0677f9;
   --primary-3: #153163;
   --secondary-1: #f5faff;
 }
 
+
+body.dark{
+    background-color: var(--dark-400);
+}
+
+body.dark h1,h2,h3, p, label, td,th, ul, li{
+    color: var(--dark-100);
+}
+
+body.dark .container{
+    background-color: var(--dark-300);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+
+}
+
+body.dark footer{
+    background-color: var(--dark-300);
+}
+
+body.dark .icone-theme{
+    fill: var(--dark-100);
+}
+body.dark .product-card {
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+body.dark .product-card:hover{
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+
+
+
 body {
     background-color: var(--neutral-100);
+
 }
+
+body.transition-theme {
+  transition: .5s;
+}
+
+
+
+
 
 h1,h2,h3, p, label, td,th, ul, li {
     color: var(--neutral-700);
@@ -131,6 +180,8 @@ h1,h2,h3, p, label, td,th, ul, li {
     display: block;
     fill: var(--primary-1);
 }
+
+
 
 .icone-container {
     display: flex;
@@ -267,6 +318,8 @@ select {
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
+
+
 .product-info{
     display: flex;
     flex-direction: column;
@@ -357,7 +410,6 @@ span {
 
 
 .btn-carrinho:hover .cart-container{
-    background-color: var(--neutral-100);
     color: var(--neutral-200);
     text-decoration: underline;
 }
@@ -382,3 +434,74 @@ span {
 
 
 
+
+
+.popup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 9999;
+}
+
+.popup-sucess{
+    background-color: #29b971;
+}
+.popup-fail{
+    background-color: #b9294d;
+}
+
+.popup.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hidden {
+  display: none;
+}
+
+.header-options{
+    margin-left: 10px;
+}
+
+
+
+
+.icone-theme {
+    width: 32px;
+    height: auto;
+    display: block;
+    cursor: pointer;
+    
+}
+
+
+body.dark .about-text p{
+    color: var(--dark-100);
+}
+body.dark .about-text h1{
+    color: var(--primary-1);
+}
+
+body.dark .product-info p{
+    color: var(--dark-200);
+}
+
+body.dark .product-info h3{
+    color: var(--dark-100);
+}
+
+body.dark .product-info .price{
+    color: var(--dark-100);
+}
+
+body.dark .product-info .text-product{
+    color: var(--dark-100);
+}

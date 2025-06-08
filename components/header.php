@@ -1,3 +1,4 @@
+
 <?php
 
 
@@ -52,6 +53,12 @@ if (isset($_SESSION['carrinho']) && is_array($_SESSION['carrinho'])) {
             </a>
             <a href="../logout.php"><img src="../uploads/<?= htmlspecialchars($_SESSION['imagem']) ?>" alt="" class="user-image"></a> 
         <?php endif; ?>  
+        
+        <div class="header-options">
+            <a class="icone-container" id="dark-theme">
+                <?php echo add_svg("../images/theme.svg", "icone-theme", TRUE); ?>
+            </a>
+        </div>
     </div>
 
 

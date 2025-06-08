@@ -21,6 +21,12 @@ function debug_to_console($data) {
     echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
 }
 
+function popup_show($message,$type) {
+    echo "<script>showPopup(" . json_encode($message) . ",".json_encode($type).");</script>";
+}
+
+
+
 function is_logged_in() {
     return isset($_SESSION['user_id']);
 }

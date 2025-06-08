@@ -1,3 +1,4 @@
+<script src="../js/popup.js"></script>
 <?php
 // sistema/public/carrinho.php
 require '../config.php';
@@ -11,7 +12,8 @@ if (isset($_GET['remover'])) {
     if (isset($_SESSION['carrinho'][$produto_id])) {
         unset($_SESSION['carrinho'][$produto_id]);
     }
-    redirect('carrinho.php');
+    //redirect('carrinho.php');
+    popup_show('Item removido com sucesso', "popup-sucess");
 }
 
 // Calcular total e obter detalhes dos produtos
