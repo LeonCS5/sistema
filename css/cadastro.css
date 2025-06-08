@@ -1,0 +1,39 @@
+.container { width: 80%; max-width: 420px; margin: 50px auto; background: white; padding: 30px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+h1 { text-align: center; margin-top: 0; }
+.form-group { margin-bottom: 15px; }
+label { display: block; margin-bottom: 5px; }
+input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px; }
+
+.error { color: #e74c3c; margin-bottom: 15px; }
+.register-link { text-align: center; margin-top: 20px; }
+
+
+.login-link {
+    margin-top: 10px;
+}
+
+.login-link p {
+    color: grey;
+    text-align: center;
+}
+
+.login-link p a:hover {
+    text-decoration: underline;
+}
+
+
+.options{
+    display: flex;
+    gap: 6px;
+}
+
+
+.btn-cadastro{
+    display: flex;
+    justify-content: center;
+}
+
+.btn-cadastro button{
+    border-radius: 5px;
+    width: 100%;
+}

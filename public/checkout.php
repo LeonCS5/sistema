@@ -111,78 +111,78 @@ if (!$usuario && isset($_COOKIE['dados_cliente'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finalizar Pedido</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
-        .container { width: 80%; margin: 20px auto; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        form { display: grid; gap: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input, textarea, select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px; }
-        .btn { background: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 3px; cursor: pointer; text-decoration: none; display: inline-block; }
-        .btn:hover { background: #2980b9; }
-        .btn-success { background: #2ecc71; }
-        .btn-success:hover { background: #27ae60; }
-        .message { padding: 10px; margin-bottom: 20px; border-radius: 3px; }
-        .error { background: #f8d7da; color: #721c24; }
-        .cart-summary { background: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
-        .cart-item { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee; }
-        .cart-total { font-weight: bold; font-size: 1.2em; text-align: right; margin-top: 10px; }
-    </style>
+    <title>Checkout</title>
+    <link rel="icon" href="../images/icone_galopes.svg" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/checkout.css">
+
 </head>
 <body>
-    <div class="container">
-        <h1>Finalizar Pedido</h1>
-        
-        <?php if (isset($_SESSION['erro'])): ?>
-            <div class="message error"><?= $_SESSION['erro'] ?></div>
-            <?php unset($_SESSION['erro']); ?>
-        <?php endif; ?>
-        
-        <div class="cart-summary">
-            <h3>Resumo do Pedido</h3>
-            <?php 
-            $total = 0;
-            foreach ($_SESSION['carrinho'] as $produto_id => $quantidade):
-                $sql = "SELECT nome, preco FROM produtos WHERE id = $produto_id";
-                $result = $conn->query($sql);
-                if ($produto = $result->fetch_assoc()):
-                    $subtotal = $produto['preco'] * $quantidade;
-                    $total += $subtotal;
-            ?>
-                <div class="cart-item">
-                    <span><?= htmlspecialchars($produto['nome']) ?> (x<?= $quantidade ?>)</span>
-                    <span>R$ <?= number_format($subtotal, 2, ',', '.') ?></span>
+    <div class="main">
+        <?php include '../components/header.php';?>
+        <div class="container">
+            <h1 class="finalizar-title">Finalizar Pedido</h1>
+            
+            <?php if (isset($_SESSION['erro'])): ?>
+                <div class="message error"><?= $_SESSION['erro'] ?></div>
+                <?php unset($_SESSION['erro']); ?>
+            <?php endif; ?>
+            
+            <div class="cart-summary">
+                <h3 class="resumo-pedido">Resumo do Pedido</h3>
+                <?php 
+                $total = 0;
+                foreach ($_SESSION['carrinho'] as $produto_id => $quantidade):
+                    $sql = "SELECT nome, preco FROM produtos WHERE id = $produto_id";
+                    $result = $conn->query($sql);
+                    if ($produto = $result->fetch_assoc()):
+                        $subtotal = $produto['preco'] * $quantidade;
+                        $total += $subtotal;
+                ?>
+                    <div class="cart-item">
+                        <span><?= htmlspecialchars($produto['nome']) ?> (x<?= $quantidade ?>)</span>
+                        <span>R$ <?= number_format($subtotal, 2, ',', '.') ?></span>
+                    </div>
+                <?php 
+                    endif;
+                endforeach; 
+                ?>
+                <div class="cart-total">Total: R$ <?= number_format($total, 2, ',', '.') ?></div>
+            </div>
+            
+            <form method="post">
+                <div class="form-labels">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" value="<?= htmlspecialchars($usuario['nome']) ?>" required>
                 </div>
-            <?php 
-                endif;
-            endforeach; 
-            ?>
-            <div class="cart-total">Total: R$ <?= number_format($total, 2, ',', '.') ?></div>
+                
+                <div class="form-labels">
+                    <label for="endereco">Endereço de Entrega:</label>
+                    <textarea id="endereco" name="endereco" required><?= htmlspecialchars($usuario['endereco']) ?></textarea>
+                </div>
+                
+                <div class="form-labels">
+                    <label for="forma_pagamento">Forma de Pagamento:</label>
+                    <select id="forma_pagamento" name="forma_pagamento" required>
+                        <option value="">Selecione...</option>
+                        <option value="Cartão" <?= $usuario['forma_pagamento'] == 'Cartão' ? 'selected' : '' ?>>Cartão de Crédito</option>
+                        <option value="Boleto" <?= $usuario['forma_pagamento'] == 'Boleto' ? 'selected' : '' ?>>Boleto Bancário</option>
+                        <option value="PIX" <?= $usuario['forma_pagamento'] == 'PIX' ? 'selected' : '' ?>>PIX</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-checkout ativo">Concluir Pedido</button>
+            </form>
         </div>
         
-        <form method="post">
-            <div>
-                <label for="nome">Nome:</label>
-                <input type="text" id="nome" name="nome" value="<?= htmlspecialchars($usuario['nome']) ?>" required>
-            </div>
-            
-            <div>
-                <label for="endereco">Endereço de Entrega:</label>
-                <textarea id="endereco" name="endereco" required><?= htmlspecialchars($usuario['endereco']) ?></textarea>
-            </div>
-            
-            <div>
-                <label for="forma_pagamento">Forma de Pagamento:</label>
-                <select id="forma_pagamento" name="forma_pagamento" required>
-                    <option value="">Selecione...</option>
-                    <option value="Cartão" <?= $usuario['forma_pagamento'] == 'Cartão' ? 'selected' : '' ?>>Cartão de Crédito</option>
-                    <option value="Boleto" <?= $usuario['forma_pagamento'] == 'Boleto' ? 'selected' : '' ?>>Boleto Bancário</option>
-                    <option value="PIX" <?= $usuario['forma_pagamento'] == 'PIX' ? 'selected' : '' ?>>PIX</option>
-                </select>
-            </div>
-            
-            <button type="submit" class="btn btn-success">Concluir Pedido</button>
-        </form>
+        <div>
+
+            <?php include '../components/footer.php';?>
+        </div>
+
     </div>
 </body>
 </html>

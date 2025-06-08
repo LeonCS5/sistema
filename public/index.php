@@ -2,51 +2,84 @@
 // sistema/public/index.php
 require '../config.php';
 
+
 $conn = connect_db();
-$sql = "SELECT id, nome, descricao, preco FROM produtos WHERE disponivel = 1";
+$sql = "SELECT id, nome, descricao, preco, imagem FROM produtos WHERE disponivel = 1";
 $result = $conn->query($sql);
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loja Online</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
-        .container { width: 80%; margin: 20px auto; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #ddd; }
-        .product-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-        .product-card { border: 1px solid #ddd; border-radius: 5px; padding: 15px; transition: transform 0.3s; }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .product-card h3 { margin-top: 0; }
-        .product-card .price { font-weight: bold; color: #e74c3c; font-size: 1.2em; margin: 10px 0; }
-        .btn { background: #3498db; color: white; border: none; padding: 8px 15px; border-radius: 3px; cursor: pointer; text-decoration: none; display: inline-block; }
-        .btn:hover { background: #2980b9; }
-        .login-buttons { display: flex; gap: 10px; }
-    </style>
+    <title>Lopes</title>
+    <link rel="icon" href="../images/icone_galopes.svg" type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/effecs.css">
+
+    
+
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Produtos Disponíveis</h1>
-            <div class="login-buttons">
-                <a href="login.php" class="btn">Login</a>
-                <a href="cadastro.php" class="btn">Cadastrar</a>
+
+    <div class="main">
+        <div>
+            <?php include '../components/header.php';?>
+            
+            <div class="image-main" id="main">
+                <h1>Agua <span>foda</span>, Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                bottom text</h1>
+                <img src="../images/back.png" alt="" class="page-image">
             </div>
-        </header>
         
-        <div class="product-list">
-            <?php while($produto = $result->fetch_assoc()): ?>
-            <div class="product-card">
-                <h3><?= htmlspecialchars($produto['nome']) ?></h3>
-                <p><?= htmlspecialchars($produto['descricao']) ?></p>
-                <div class="price">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></div>
-                <a href="produto.php?id=<?= $produto['id'] ?>" class="btn">Ver Detalhes</a>
+        
+        
+            <div class="container">
+                
+    
+                <div class="product-list">
+                    <?php while($produto = $result->fetch_assoc()): ?>
+                    <div class="product-card">
+                        <img src="../uploads/<?= htmlspecialchars($produto['imagem']) ?>" alt="" class="produto-image">
+                        <div class="product-info">
+                            <h3 class="name-product"><?= htmlspecialchars($produto['nome']) ?></h3>
+                            <div class="price">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></div>
+                            <a href="produto.php?id=<?= $produto['id'] ?>" class="btn pd ativo">
+                                <p class="text-product">PEDIR</p>
+                                <img src="../images/cart.svg" alt="" class="cart-icon">
+                            </a>
+                        </div>
+                    </div>
+                    <?php endwhile; ?>
+                </div>
             </div>
-            <?php endwhile; ?>
         </div>
+
+        <section class="about container" id="about">
+            <div class="about-text">
+                <img src="../images/back.png" alt="" class="page-image">
+                <div>
+                    <h1>Sobre nós</h1>
+                    <p>Água do Lopes nasceu com um propósito simples: levar até você água mineral de qualidade com confiança, agilidade e um atendimento que faz a diferença. Somos uma empresa familiar, com raízes firmes e comprometida em oferecer o melhor para a sua saúde e bem-estar.
+Atuando no mercado com responsabilidade e transparência, nos orgulhamos de entregar água mineral natural das melhores marcas, sempre dentro dos mais altos padrões de qualidade e segurança. Nosso diferencial está no cuidado com cada detalhe — da seleção das fontes à entrega no seu lar ou empresa.</p>
+                </div>
+            </div>
+        </section>
+
+
+        <?php include '../components/footer.php';?>
+
+
     </div>
+
 </body>
+
 </html>
 <?php $conn->close(); ?>

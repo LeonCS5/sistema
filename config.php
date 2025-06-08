@@ -13,6 +13,20 @@ function redirect($url) {
     exit;
 }
 
+function debug_to_console($data) {
+    $output = $data;
+    if (is_array($output))
+        $output = implode(',', $output);
+
+    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+}
+
+function popup_show($message,$type) {
+    echo "<script>showPopup(" . json_encode($message) . ",".json_encode($type).");</script>";
+}
+
+
+
 function is_logged_in() {
     return isset($_SESSION['user_id']);
 }
@@ -28,4 +42,21 @@ function connect_db() {
     }
     return $conn;
 }
+
+function add_svg($path, $class, $sp){
+    $svg = file_get_contents($path);
+        // Adiciona a classe dentro da tag <svg>
+    $class = '<svg class="' . $class . '"';
+    $svg = str_replace('<svg', $class, $svg);
+    $svg = preg_replace('/stroke="[^"]*"/i', 'stroke="currentColor"', $svg);
+    
+    if($sp){
+        $svg = preg_replace('/fill="[^"]*"/i', '', $svg);
+        $svg = preg_replace("/fill='[^']*'/i", '', $svg);
+    }
+
+    return  $svg;
+
+}
+
 ?>

@@ -1,3 +1,4 @@
+<script src="../js/popup.js"></script>
 <?php
 // sistema/public/cadastro.php
 require '../config.php';
@@ -13,6 +14,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome = trim($_POST['nome']);
     $endereco = trim($_POST['endereco']);
     $forma_pagamento = trim($_POST['forma_pagamento']);
+
+    $imagem_nome = null;
+    if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === 0) {
+        $extensao = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
+        $imagem_nome = uniqid() . "." . $extensao;
+        $destino = "../uploads/" . $imagem_nome;
+        move_uploaded_file($_FILES['imagem']['tmp_name'], $destino);
+    }
+    
     
     if (!empty($login) && !empty($senha) && !empty($nome) && !empty($endereco) && !empty($forma_pagamento)) {
         $conn = connect_db();
@@ -28,21 +38,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $erro = 'Este login já está em uso.';
         } else {
             $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO usuarios (login, senha, nome, endereco, forma_pagamento) VALUES (?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO usuarios (login, senha, nome, endereco, forma_pagamento, imagem) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('sssss', $login, $senha_hash, $nome, $endereco, $forma_pagamento);
+            $stmt->bind_param('ssssss', $login, $senha_hash, $nome, $endereco, $forma_pagamento, $imagem_nome);
             
             if ($stmt->execute()) {
-                $_SESSION['mensagem'] = 'Cadastro realizado com sucesso! Faça login para continuar.';
-                redirect('login.php');
+                popup_show('Cadastro realizado com sucesso! Faça login para continuar.', "popup-sucess");
+                
             } else {
-                $erro = 'Erro ao cadastrar usuário.';
+                popup_show('Erro ao cadastrar usuário', "popup-fail");
+                
             }
         }
         
         $conn->close();
     } else {
-        $erro = 'Preencha todos os campos.';
+        popup_show('Preencha todos os campos.', "popup-fail");
     }
 }
 ?>
@@ -52,64 +63,70 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
-        .container { width: 80%; max-width: 400px; margin: 50px auto; background: white; padding: 30px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { text-align: center; margin-top: 0; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; }
-        input, select, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 3px; }
-        .btn { width: 100%; padding: 10px; background: #3498db; color: white; border: none; border-radius: 3px; cursor: pointer; }
-        .btn:hover { background: #2980b9; }
-        .error { color: #e74c3c; margin-bottom: 15px; }
-        .login-link { text-align: center; margin-top: 20px; }
-    </style>
+    <link rel="icon" href="../images/icone_galopes.svg" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/cadastro.css">
+
 </head>
 <body>
-    <div class="container">
-        <h1>Cadastro de Cliente</h1>
-        
-        <?php if ($erro): ?>
-            <div class="error"><?= $erro ?></div>
-        <?php endif; ?>
-        
-        <form method="post">
-            <div class="form-group">
-                <label for="login">Login:</label>
-                <input type="text" id="login" name="login" required>
-            </div>
+    <div class="main">
+        <?php include '../components/header.php';?>
+        <div class="container">
+            <h1>Cadastro</h1>
             
-            <div class="form-group">
-                <label for="senha">Senha:</label>
-                <input type="password" id="senha" name="senha" required>
-            </div>
+            <form method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="login">Login:</label>
+                    <input type="text" id="login" name="login" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" name="senha" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="nome">Nome Completo:</label>
+                    <input type="text" id="nome" name="nome" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="endereco">Endereço:</label>
+                    <input type="text" id="endereco" name="endereco" required>
+                </div>
+                
+                <div class="form-group options">
+                    <label for="forma_pagamento">Forma de Pagamento:</label>
+                    <select id="forma_pagamento" name="forma_pagamento" required>
+                        <option value="">Selecione...</option>
+                        <option value="Cartão">Cartão de Crédito</option>
+                        <option value="Boleto">Boleto Bancário</option>
+                        <option value="PIX">PIX</option>
+                    </select>
+                </div>
+    
+                <div class="form-group options">
+                    <label >Imagem:</label>
+                    <div id="drop-area">
+                        <input type="file" id="imagem" name="imagem" accept="image/*">
+                    </div>
+                </div>
+                <div class="btn-cadastro">
+                    <button type="submit" class="btn ativo">Cadastrar</button>
+                </div>
+            </form>
             
-            <div class="form-group">
-                <label for="nome">Nome Completo:</label>
-                <input type="text" id="nome" name="nome" required>
+            <div class="login-link">
+                <p>Já tem uma conta? <a href="login.php">Faça login</a></p>
             </div>
-            
-            <div class="form-group">
-                <label for="endereco">Endereço:</label>
-                <textarea id="endereco" name="endereco" required></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label for="forma_pagamento">Forma de Pagamento Preferida:</label>
-                <select id="forma_pagamento" name="forma_pagamento" required>
-                    <option value="">Selecione...</option>
-                    <option value="Cartão">Cartão de Crédito</option>
-                    <option value="Boleto">Boleto Bancário</option>
-                    <option value="PIX">PIX</option>
-                </select>
-            </div>
-            
-            <button type="submit" class="btn">Cadastrar</button>
-        </form>
-        
-        <div class="login-link">
-            <p>Já tem uma conta? <a href="login.php">Faça login</a></p>
         </div>
+    
+        <?php include '../components/footer.php';?>
+
     </div>
 </body>
 </html>
