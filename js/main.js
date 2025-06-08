@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
       document.body.classList.add("dark");
       
     }
+
+    
     
     let body = this.querySelector('body')
     let theme = document.getElementById("dark-theme")
@@ -20,6 +22,9 @@ document.addEventListener('DOMContentLoaded', function () {
             let theme = document.body.classList.contains("dark") ? "dark" : "light";
             localStorage.setItem("theme", theme);
     })
+
+
+
 
 
 

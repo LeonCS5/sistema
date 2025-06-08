@@ -27,7 +27,7 @@ if (isset($_SESSION['carrinho']) && is_array($_SESSION['carrinho'])) {
         <?php if (!is_logged_in()): ?>
             <a href="../public/catalogo.php" class="btn">Catalogo</a>
             <a href="../public/carrinho.php" class="btn-carrinho">
-                <div class="cart-container">
+                <div class="cart-container btn">
                     <?php echo add_svg("../images/cart1.svg", "header-icon", FALSE); ?>
                     <?php if ($total_items > 0): ?>
                         <span class="cart-quantity"><?= htmlspecialchars($total_items) ?></span>
@@ -35,11 +35,11 @@ if (isset($_SESSION['carrinho']) && is_array($_SESSION['carrinho'])) {
                 </div>
             </a>
             <a href="../public/login.php" class="btn">Login</a>
-            <a href="../public/cadastro.php" class="btn ativo">Cadastrar</a>
+            <a href="../public/cadastro.php" class="btn">Cadastrar</a>
         <?php else: ?>
             <a href="../public/catalogo.php" class="btn">Catalogo</a>        
             <a href="../user/pedidos.php" class="btn">Meus Pedidos</a>
-            <a href="../public/carrinho.php" class="btn-carrinho">
+            <a href="../public/carrinho.php" class="btn-carrinho btn">
                 <div class="cart-container">
                     <!-- <img src="../images/cart.svg" alt="" class="header-icon"> -->
                     <?php echo add_svg("../images/cart1.svg", "header-icon", FALSE); ?>
@@ -51,14 +51,22 @@ if (isset($_SESSION['carrinho']) && is_array($_SESSION['carrinho'])) {
             
             </a>
             <a href="../logout.php"><img src="../uploads/<?= htmlspecialchars($_SESSION['imagem']) ?>" alt="" class="user-image"></a> 
-        <?php endif; ?>  
+        <?php endif; ?>
+
+
         
         <div class="header-options">
+            <div class="sep"></div>
             <div class="selector">
-                <input type="color" id="seletorCor" value="#ff0000">
+                <input type="color" id="seletorCor" value="#ff0000" class="hidden">
             </div>
+
+            <a class="icone-container" id="aumentar">
+                <?php echo add_svg("../images/font.svg", "header-icon icon-fill", TRUE); ?>
+            </a>
+
             <a class="icone-container" id="dark-theme">
-                <?php echo add_svg("../images/theme.svg", "icone-theme", TRUE); ?>
+                <?php echo add_svg("../images/theme3.svg", "icone-theme icon-fill", TRUE); ?>
             </a>
         </div>
     </div>
