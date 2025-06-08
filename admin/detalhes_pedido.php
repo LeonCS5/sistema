@@ -10,7 +10,9 @@ $conn = connect_db();
 $pedido_id = (int)$_GET['id'];
 
 // Obter detalhes do pedido
-$sql = "SELECT p.*, u.nome AS cliente_nome 
+$sql = "SELECT 
+        p.*,
+        COALESCE(u.nome, p.cliente_nome, 'Cliente não cadastrado') AS cliente_exibir
         FROM pedidos p
         LEFT JOIN usuarios u ON p.usuario_id = u.id
         WHERE p.id = $pedido_id";
@@ -114,7 +116,7 @@ $historico_result = $conn->query($sql_hist);
         
         <div>
             <p><strong>Data/Hora:</strong> <?= date('d/m/Y H:i', strtotime($pedido['data_hora'])) ?></p>
-            <p><strong>Cliente:</strong> <?= $pedido['cliente_nome'] ? htmlspecialchars($pedido['cliente_nome']) : 'Cliente não cadastrado' ?></p>
+            <p><strong>Cliente:</strong> <?= $pedido['cliente_nome'] ? htmlspecialchars($pedido['cliente_exibir']) : 'cliente não cadastrado'?></p>
             <p><strong>Endereço de Entrega:</strong> <?= htmlspecialchars($pedido['endereco']) ?></p>
             <p><strong>Forma de Pagamento:</strong> <?= htmlspecialchars($pedido['forma_pagamento']) ?></p>
             <p><strong>Status:</strong> <span class="status status-<?= strtolower($pedido['status']) ?>"><?= $pedido['status'] ?></span></p>

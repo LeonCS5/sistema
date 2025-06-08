@@ -32,9 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         try {
             // Criar pedido
-            $sql = "INSERT INTO pedidos (usuario_id, endereco, forma_pagamento) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO pedidos (usuario_id, cliente_nome, endereco, forma_pagamento) VALUES (?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('iss', $usuario_id, $endereco, $forma_pagamento);
+            $stmt->bind_param('isss', $usuario_id, $nome, $endereco, $forma_pagamento);
             $stmt->execute();
             $pedido_id = $conn->insert_id;
             
@@ -168,9 +168,11 @@ if (!$usuario && isset($_COOKIE['dados_cliente'])) {
                     <label for="forma_pagamento">Forma de Pagamento:</label>
                     <select id="forma_pagamento" name="forma_pagamento" required>
                         <option value="">Selecione...</option>
-                        <option value="Cartão" <?= $usuario['forma_pagamento'] == 'Cartão' ? 'selected' : '' ?>>Cartão de Crédito</option>
+                        <option value="Cartão_Credito" <?= $usuario['forma_pagamento'] == 'Cartão_Credito' ? 'selected' : '' ?>>Cartão de Crédito</option>
+                        <option value="Cartão_Debito" <?= $usuario['forma_pagamento'] == 'Cartão_Debito' ? 'selected' : '' ?>>Cartão de Débito</option>
                         <option value="Boleto" <?= $usuario['forma_pagamento'] == 'Boleto' ? 'selected' : '' ?>>Boleto Bancário</option>
                         <option value="PIX" <?= $usuario['forma_pagamento'] == 'PIX' ? 'selected' : '' ?>>PIX</option>
+                        <option value="Dinheiro" <?= $usuario['forma_pagamento'] == 'Dinheiro' ? 'selected' : '' ?>>Dinheiro</option>
                     </select>
                 </div>
                 

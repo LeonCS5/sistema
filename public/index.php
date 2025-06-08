@@ -67,8 +67,8 @@ $result = $conn->query($sql);
                 <img src="../images/back.png" alt="" class="page-image">
                 <div>
                     <h1>Sobre nós</h1>
-                    <p>Água do Lopes nasceu com um propósito simples: levar até você água mineral de qualidade com confiança, agilidade e um atendimento que faz a diferença. Somos uma empresa familiar, com raízes firmes e comprometida em oferecer o melhor para a sua saúde e bem-estar.
-Atuando no mercado com responsabilidade e transparência, nos orgulhamos de entregar água mineral natural das melhores marcas, sempre dentro dos mais altos padrões de qualidade e segurança. Nosso diferencial está no cuidado com cada detalhe — da seleção das fontes à entrega no seu lar ou empresa.</p>
+                    <p>Água do Lopes nasceu com um propósito simples: levar até você água mineral de qualidade com confiança, agilidade e um atendimento que faz a diferença. Somos uma empresa com raízes firmes e comprometida em oferecer o melhor para a sua saúde e bem-estar.
+                        Atuando no mercado com responsabilidade e transparência, nos orgulhamos de entregar água mineral natural das melhores marcas, sempre dentro dos mais altos padrões de qualidade e segurança. Nosso diferencial está no cuidado com cada detalhe — da seleção das fontes à entrega no seu lar ou empresa.</p>
                 </div>
             </div>
         </section>

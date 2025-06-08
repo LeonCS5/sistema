@@ -59,6 +59,7 @@ $historico_result = $stmt->get_result();
             </div>
             
             <div class="pedido-info">
+                <p><strong>Nome:</strong> <?= htmlspecialchars($pedido['cliente_nome']) ?></p>
                 <p><strong>Data/Hora:</strong> <?= date('d/m/Y H:i', strtotime($pedido['data_hora'])) ?></p>
                 <p><strong>Endereço de Entrega:</strong> <?= htmlspecialchars($pedido['endereco']) ?></p>
                 <p><strong>Forma de Pagamento:</strong> <?= htmlspecialchars($pedido['forma_pagamento']) ?></p>
