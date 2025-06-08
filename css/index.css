@@ -26,7 +26,7 @@ body.dark{
     background-color: var(--dark-400);
 }
 
-body.dark h1,h2,h3, p, label, td,th, ul, li{
+body.dark h1,h3, label, td,th, ul, li{
     color: var(--dark-100);
 }
 
@@ -49,6 +49,10 @@ body.dark .product-card {
 
 body.dark .product-card:hover{
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+body.dark .product-image{
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 
@@ -503,5 +507,13 @@ body.dark .product-info .price{
 }
 
 body.dark .product-info .text-product{
+    color: var(--dark-100);
+}
+
+body.dark .sugest h2{
+    color: var(--primary-1);
+}
+
+body.dark .prod-desc p{
     color: var(--dark-100);
 }

@@ -123,15 +123,14 @@ if (!$produto) {
                 </div>
             </div>
             <hr class="hr-produtos">
-            <div class="sugest"><h2>Sugestões</h1></div>
+            <div class="sugest"><h2>Sugestões</h2></div>
             <div class="product-list">
                     
                     <?php while($produto = $result_pd->fetch_assoc()): ?>
                     <div class="product-card">
                         <img src="../uploads/<?= htmlspecialchars($produto['imagem']) ?>" alt="" class="produto-image">
                         <div class="product-info">
-                            <p class="name-product"><?= htmlspecialchars($produto['nome']) ?></h3>
-                            <h3><?= htmlspecialchars($produto['descricao']) ?></p>
+                            <h3 class="name-product"><?= htmlspecialchars($produto['nome']) ?></h3>
                             <div class="price">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></div>
                             <a href="produto.php?id=<?= $produto['id'] ?>" class="btn pd ativo">
                                 <p class="text-product">PEDIR</p>
