@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 
                 <div class="form-group options">
-                    <label for="forma_pagamento">Forma de Pagamento Preferida:</label>
+                    <label for="forma_pagamento">Forma de Pagamento:</label>
                     <select id="forma_pagamento" name="forma_pagamento" required>
                         <option value="">Selecione...</option>
                         <option value="Cartão">Cartão de Crédito</option>
@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
     
                 <div class="form-group options">
-                    <label>Imagem:</label>
+                    <label >Imagem:</label>
                     <div id="drop-area">
                         <input type="file" id="imagem" name="imagem" accept="image/*">
                     </div>

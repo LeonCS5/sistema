@@ -2,7 +2,6 @@
 .order-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
 table { width: 100%; border-collapse: collapse; margin-top: 20px; }
 th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #ddd; }
-th { background-color: #f2f2f2; font-weight: bold; }
 .status { padding: 5px 10px; border-radius: 3px; font-weight: bold; }
 .status-recebido { background-color: var(--primary-1); color: white; }
 .status-enviado { background-color: #f39c12; color: white; }

@@ -33,7 +33,7 @@ $result = $conn->query($sql);
         <?php include '../components/header.php';?>
         
         <div class="container">
-            <h1>Meus Pedidos</h1>
+            <h1 class="pedidos-title">Meus Pedidos</h1>
             
             <?php if ($result->num_rows > 0): ?>
                 <table>

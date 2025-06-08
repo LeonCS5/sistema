@@ -21,12 +21,16 @@
   --secondary-1: #f5faff;
 }
 
+table {
+    border: none;
+}
+
 
 body.dark{
     background-color: var(--dark-400);
 }
 
-body.dark h1,h3, label, td,th, ul, li{
+body.dark h1 {
     color: var(--dark-100);
 }
 
@@ -54,6 +58,65 @@ body.dark .product-card:hover{
 body.dark .product-image{
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
+
+body.dark .products-catalogo .item-card{
+    border: 1px solid rgba(255, 255, 255, 0.05);
+} 
+body.dark .products-catalogo .item-card:hover{
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+} 
+
+body.dark .container-catalogo h1 {
+    color: var(--primary-1);
+}
+body.dark .container-catalogo p {
+    color: var(--dark-100);
+}
+
+body.dark .price {
+    color: var(--dark-100);
+}
+
+/* Carrinho */
+
+body.dark .carrinho h1{
+    color: var(--primary-1);
+}
+
+body.dark .items-container{
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+body.dark .items-container:hover{
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+body.dark .carrinho .item-info h3{
+    color: var(--dark-100);
+}
+body.dark .carrinho .item-info p{
+    color: var(--dark-100);
+}
+body.dark .total{
+    color: var(--dark-100);
+}
+
+body.dark .carrinho-vazio {
+    color: var(--dark-100);
+}
+
+
+body.dark td{
+    color: var(--dark-100);
+    border: 1px solid rgba(255, 255, 255, 0.1);;
+    transition: .5s;
+}
+body.dark th{
+    color: var(--dark-100);
+    border: 1px solid rgba(255, 255, 255, 0.1);;
+
+}
+
 
 
 
@@ -356,6 +419,7 @@ select {
     text-decoration: none; 
     border-radius: 20px;
     display: inline-block;
+    transition: .5s;
 }
 
 .btn:hover, .ativo { 
@@ -472,7 +536,14 @@ span {
 }
 
 .header-options{
+    display: flex;
+    gap: 10px;
     margin-left: 10px;
+}
+
+.selector {
+    display: flex;
+    align-items: center;
 }
 
 
@@ -486,6 +557,12 @@ span {
     
 }
 
+
+
+
+body.dark tr:hover{
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
 
 body.dark .about-text p{
     color: var(--dark-100);
@@ -515,5 +592,148 @@ body.dark .sugest h2{
 }
 
 body.dark .prod-desc p{
+    color: var(--dark-100);
+}
+
+body.dark .name-desc h1 {
+    color: var(--dark-100);
+}
+body.dark .price h3 {
+    color: var(--dark-100);
+}
+body.dark select {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  appearance: none;
+  font-size: 1rem;
+  transition: .5s;
+}
+
+body.dark select:hover,select:focus {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.05);
+  outline: none;
+}
+
+body.dark .estoque{
+    color: var(--dark-200);
+}
+
+
+body.dark .pedidos-title{
+    color: var(--primary-1)
+}
+
+body.dark .pedido-info p, body.dark .sem-status{
+    color: var(--dark-100);
+}
+
+body.dark .order-header h1{
+    color: var(--primary-1);
+}
+body.dark .detalhes-pedido{
+    color: var(--primary-1);
+}
+body.dark .status-pedidos{
+    color: var(--primary-1);
+}
+body.dark .sts{
+    color: var(--dark-100);
+}
+
+body.dark input {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+body.dark input:hover,
+body.dark input:focus {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.05);
+  outline: none;
+}
+
+body.dark .form-group label, body.dark .form-labels label{
+    color: var(--dark-100);
+}
+
+body.dark .login-link p, body.dark .register-link p {
+    color: var(--dark-100);
+}
+
+body.dark .login-link p a, body.dark .register-link p a {
+    color: var(--primary-1);
+}
+
+body.dark .cart-total{
+    color: var(--dark-100);
+}
+
+body.dark .cart-item span {
+    color: var(--dark-200);
+}
+
+body.dark .finalizar-title {
+    color: var(--primary-1);
+}
+
+body.dark .cart-sumarry h3 {
+    color: var(--dark-100);
+}
+
+body.dark textarea {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 120px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.dark textarea:hover, body.dark
+textarea:focus {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.05);
+  outline: none;
+}
+
+
+.file-upload-input {
+  display: none;
+}
+
+.file-upload-label {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.file-upload-label:hover {
+  background-color: #333333;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.dark .resumo-pedido{
     color: var(--dark-100);
 }

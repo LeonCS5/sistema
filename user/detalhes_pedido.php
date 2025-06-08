@@ -65,7 +65,7 @@ $historico_result = $stmt->get_result();
                 <p><strong>Status:</strong> <span class="status status-<?= strtolower($pedido['status']) ?>"><?= $pedido['status'] ?></span></p>
             </div>
             
-            <h2>Itens do Pedido</h2>
+            <h2 class="detalhes-pedido">Itens do Pedido</h2>
             <table>
                 <thead>
                     <tr>
@@ -106,7 +106,7 @@ $historico_result = $stmt->get_result();
                     <?php endwhile; ?>
                 </ul>
             <?php else: ?>
-                <p>O status do pedido ainda não foi atualizado.</p>
+                <p class="sem-status">O status do pedido ainda não foi atualizado.</p>
             <?php endif; ?>
         </div>
 

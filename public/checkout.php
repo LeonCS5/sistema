@@ -124,7 +124,7 @@ if (!$usuario && isset($_COOKIE['dados_cliente'])) {
     <div class="main">
         <?php include '../components/header.php';?>
         <div class="container">
-            <h1>Finalizar Pedido</h1>
+            <h1 class="finalizar-title">Finalizar Pedido</h1>
             
             <?php if (isset($_SESSION['erro'])): ?>
                 <div class="message error"><?= $_SESSION['erro'] ?></div>
@@ -132,7 +132,7 @@ if (!$usuario && isset($_COOKIE['dados_cliente'])) {
             <?php endif; ?>
             
             <div class="cart-summary">
-                <h3>Resumo do Pedido</h3>
+                <h3 class="resumo-pedido">Resumo do Pedido</h3>
                 <?php 
                 $total = 0;
                 foreach ($_SESSION['carrinho'] as $produto_id => $quantidade):
@@ -154,17 +154,17 @@ if (!$usuario && isset($_COOKIE['dados_cliente'])) {
             </div>
             
             <form method="post">
-                <div>
+                <div class="form-labels">
                     <label for="nome">Nome:</label>
                     <input type="text" id="nome" name="nome" value="<?= htmlspecialchars($usuario['nome']) ?>" required>
                 </div>
                 
-                <div>
+                <div class="form-labels">
                     <label for="endereco">Endereço de Entrega:</label>
                     <textarea id="endereco" name="endereco" required><?= htmlspecialchars($usuario['endereco']) ?></textarea>
                 </div>
                 
-                <div>
+                <div class="form-labels">
                     <label for="forma_pagamento">Forma de Pagamento:</label>
                     <select id="forma_pagamento" name="forma_pagamento" required>
                         <option value="">Selecione...</option>

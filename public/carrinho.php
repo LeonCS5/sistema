@@ -71,7 +71,7 @@ if (isset($_SESSION['carrinho']) && is_array($_SESSION['carrinho'])) {
                     <?php endif; ?>
                     
                     <?php if (empty($carrinho)): ?>
-                        <p>Seu carrinho está vazio.</p>
+                        <p class="carrinho-vazio">Seu carrinho está vazio.</p>
                         <a href="catalogo.php" class="btn">Continuar Comprando</a>
                     <?php else: ?>
                         <div class="carrinho">

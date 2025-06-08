@@ -24,7 +24,6 @@ if (isset($_SESSION['carrinho']) && is_array($_SESSION['carrinho'])) {
     </a>
     <div class="login-buttons">
         
-        <input type="color" id="seletorCor" value="#ff0000">
         <?php if (!is_logged_in()): ?>
             <a href="../public/catalogo.php" class="btn">Catalogo</a>
             <a href="../public/carrinho.php" class="btn-carrinho">
@@ -55,6 +54,9 @@ if (isset($_SESSION['carrinho']) && is_array($_SESSION['carrinho'])) {
         <?php endif; ?>  
         
         <div class="header-options">
+            <div class="selector">
+                <input type="color" id="seletorCor" value="#ff0000">
+            </div>
             <a class="icone-container" id="dark-theme">
                 <?php echo add_svg("../images/theme.svg", "icone-theme", TRUE); ?>
             </a>

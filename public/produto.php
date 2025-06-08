@@ -86,15 +86,15 @@ if (!$produto) {
                     <div class="produto-menu">                        
                         <div class="name-desc">
                             <h1><?= htmlspecialchars($produto['nome']) ?></h1>
-                            <div class="price"><h3>R$<?= number_format($produto['preco'], 2, ',', '.') ?></h3></div>
                         </div>
+                        <div class="price"><h3>R$<?= number_format($produto['preco'], 2, ',', '.') ?></h3></div>
                         <div class="prod-desc">
                             <p><?= htmlspecialchars($produto['descricao']) ?></p>
                         </div>
                         <?php if ($produto['quantidade'] >= 5): ?>
-                            <p>Em estoque - <?= $produto['quantidade'] ?></p>
+                            <p class="estoque">Em estoque - <?= $produto['quantidade'] ?></p>
                         <?php elseif($produto['quantidade'] > 0 and $produto['quantidade'] < 5): ?>
-                            <p>Baixo Estoque - <?= $produto['quantidade'] ?></p>
+                            <p class="estoque">Baixo Estoque - <?= $produto['quantidade'] ?></p>
                         <?php endif; ?>
                         <input type="hidden" name="produto_id" id="prod_id" value="<?= $produto['id'] ?>">
                         <select name="quantidade" id="quantidade">
