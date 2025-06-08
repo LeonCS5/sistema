@@ -19,7 +19,10 @@ $result = $conn->query($sql);
 $total_pedidos = $result->fetch_assoc()['total'];
 
 // Últimos pedidos
-$sql = "SELECT p.id, p.data_hora, p.status, u.nome AS cliente_nome 
+$sql = "SELECT p.id,
+            p.data_hora,
+            p.status,
+            COALESCE(u.nome, p.cliente_nome, 'Cliente não cadastrado') AS cliente_exibir
         FROM pedidos p
         LEFT JOIN usuarios u ON p.usuario_id = u.id
         ORDER BY p.data_hora DESC
@@ -102,7 +105,7 @@ $baixo_estoque = $conn->query($sql);
                         <tr>
                             <td>#<?= $pedido['id'] ?></td>
                             <td><?= date('d/m/Y H:i', strtotime($pedido['data_hora'])) ?></td>
-                            <td><?= $pedido['cliente_nome'] ? htmlspecialchars($pedido['cliente_nome']) : 'Cliente não cadastrado' ?></td>
+                            <td><?= $pedido['cliente_exibir'] ? htmlspecialchars($pedido['cliente_exibir']) : 'Cliente não cadastrado' ?></td>
                             <td><span class="status status-<?= strtolower($pedido['status']) ?>"><?= $pedido['status'] ?></span></td>
                             <td><a href="detalhes_pedido.php?id=<?= $pedido['id'] ?>" class="btn">Detalhes</a></td>
                         </tr>
