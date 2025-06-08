@@ -34,8 +34,7 @@ $result = $conn->query($sql);
             <?php include '../components/header.php';?>
             
             <div class="image-main" id="main">
-                <h1>Agua <span>foda</span>, Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                bottom text</h1>
+                <h1><span>Água</span> pura, atendimento transparente, direto do Lopes pra sua casa.</h1>
                 <img src="../images/back.png" alt="" class="page-image">
             </div>
         

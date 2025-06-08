@@ -17,12 +17,16 @@
 
   
   --primary-1: #0677f9;
-  --primary-3: #153163;
+  --primary-3: #004ea8;
   --secondary-1: #f5faff;
 }
 
 table {
     border: none;
+}
+
+.hidden {
+    display: none;
 }
 
 
@@ -457,7 +461,13 @@ span {
     color: var(--primary-1);
     
     
+    
 }
+
+.icon-fill {
+    fill: var(--primary-1);
+}
+
 
 .btn-carrinho { 
     color: var(--primary-1); 
@@ -536,6 +546,7 @@ span {
 }
 
 .header-options{
+    
     display: flex;
     gap: 10px;
     margin-left: 10px;
@@ -549,12 +560,18 @@ span {
 
 
 
+
 .icone-theme {
     width: 32px;
     height: auto;
     display: block;
     cursor: pointer;
     
+}
+
+.sep{
+    height: 32px;
+    border-left: 1px solid #ddd;
 }
 
 
@@ -736,4 +753,9 @@ textarea:focus {
 
 body.dark .resumo-pedido{
     color: var(--dark-100);
+}
+
+.btn-carrinho.btn:hover {
+    background-color: rgba(255, 255, 255, 0);
+    
 }
