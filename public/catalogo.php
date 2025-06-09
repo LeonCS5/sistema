@@ -31,7 +31,7 @@ $result = $conn->query($sql);
             <p>Os nossos melhores produtos.</p>
             <div class="products-catalogo">
                 <?php while($produto = $result->fetch_assoc()): ?>
-                <div class="item-card">
+                <div class="item-card" alt="<?= htmlspecialchars($produto['nome']) ?>">
                     <div class="imagem-div"><img src="../uploads/<?= htmlspecialchars($produto['imagem']) ?>" alt="" class="catalogo-imagem"></div>
                     <div class="info-card">
                         <p class="name-product"><?= htmlspecialchars($produto['nome']) ?></p>

@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $result = $stmt->get_result();
         
         if ($result->num_rows > 0) {
-            $erro = 'Este login já está em uso.';
+            popup_show('Este login já está em uso.', "popup-fail");
         } else {
             $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
             $sql = "INSERT INTO usuarios (login, senha, nome, endereco, forma_pagamento, imagem) VALUES (?, ?, ?, ?, ?, ?)";
@@ -103,11 +103,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label for="forma_pagamento">Forma de Pagamento:</label>
                     <select id="forma_pagamento" name="forma_pagamento" required>
                         <option value="">Selecione...</option>
-                        <option value="Cartão_Credito" <?= $usuario['forma_pagamento'] == 'Cartão_Credito' ? 'selected' : '' ?>>Cartão de Crédito</option>
-                        <option value="Cartão_Debito" <?= $usuario['forma_pagamento'] == 'Cartão_Debito' ? 'selected' : '' ?>>Cartão de Débito</option>
-                        <option value="Boleto" <?= $usuario['forma_pagamento'] == 'Boleto' ? 'selected' : '' ?>>Boleto Bancário</option>
-                        <option value="PIX" <?= $usuario['forma_pagamento'] == 'PIX' ? 'selected' : '' ?>>PIX</option>
-                        <option value="Dinheiro" <?= $usuario['forma_pagamento'] == 'Dinheiro' ? 'selected' : '' ?>>Dinheiro</option>
+                        <option value="Cartão_Credito">Cartão de Crédito</option>
+                        <option value="Cartão_Debito">Cartão de Débito</option>
+                        <option value="Boleto">Boleto Bancário</option>
+                        <option value="PIX">PIX</option>
+                        <option value="Dinheiro">Dinheiro</option>
                     </select>
                 </div>
     

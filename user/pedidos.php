@@ -43,6 +43,7 @@ $result = $conn->query($sql);
                             <th>Data/Hora</th>
                             <th>Status</th>
                             <th>Total</th>
+                            <th>Nome</th>
                             <th>Ações</th>
                         </tr>
                     </thead>

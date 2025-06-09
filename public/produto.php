@@ -127,7 +127,7 @@ if (!$produto) {
             <div class="product-list">
                     
                     <?php while($produto = $result_pd->fetch_assoc()): ?>
-                    <div class="product-card">
+                    <div class="product-card" alt="<?= htmlspecialchars($produto['nome']) ?>">
                         <img src="../uploads/<?= htmlspecialchars($produto['imagem']) ?>" alt="" class="produto-image">
                         <div class="product-info">
                             <h3 class="name-product"><?= htmlspecialchars($produto['nome']) ?></h3>

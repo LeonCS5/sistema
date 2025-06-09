@@ -45,14 +45,14 @@ $result = $conn->query($sql);
     
                 <div class="product-list">
                     <?php while($produto = $result->fetch_assoc()): ?>
-                    <div class="product-card">
-                        <img src="../uploads/<?= htmlspecialchars($produto['imagem']) ?>" alt="" class="produto-image">
+                    <div class="product-card" alt="<?= htmlspecialchars($produto['nome']) ?>">
+                        <img src="../uploads/<?= htmlspecialchars($produto['imagem']) ?>"  class="produto-image">
                         <div class="product-info">
                             <h3 class="name-product"><?= htmlspecialchars($produto['nome']) ?></h3>
                             <div class="price">R$ <?= number_format($produto['preco'], 2, ',', '.') ?></div>
                             <a href="produto.php?id=<?= $produto['id'] ?>" class="btn pd ativo">
                                 <p class="text-product">PEDIR</p>
-                                <img src="../images/cart.svg" alt="" class="cart-icon">
+                                <img src="../images/cart.svg" alt="carrinho" class="cart-icon">
                             </a>
                         </div>
                     </div>

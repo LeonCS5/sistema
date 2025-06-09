@@ -41,19 +41,19 @@
 }
 
 .btn-success {
-    color: #29b971;
+    color: var(--terciary-1);
 }
 
 .btn-success:hover{
-    background-color: #29b971;
+    background-color: var(--terciary-1);
 }
 
 .btn-excluir{
-    color: #b92948;
+    color: var(--terciary-2);
 }
 
 .btn-excluir:hover{
-   background: #b92948;
+   background: var(--terciary-2);
 }
 
 .item-info{

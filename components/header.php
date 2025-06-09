@@ -40,7 +40,7 @@ if (isset($_SESSION['carrinho']) && is_array($_SESSION['carrinho'])) {
             <a href="../public/catalogo.php" class="btn">Catalogo</a>        
             <a href="../user/pedidos.php" class="btn">Meus Pedidos</a>
             <a href="../public/carrinho.php" class="btn-carrinho btn">
-                <div class="cart-container">
+                <div class="cart-container btn">
                     <!-- <img src="../images/cart.svg" alt="" class="header-icon"> -->
                     <?php echo add_svg("../images/cart1.svg", "header-icon", FALSE); ?>
 
