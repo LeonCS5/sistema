@@ -34,7 +34,9 @@ $result = $conn->query($sql);
                 <div class="item-card" alt="<?= htmlspecialchars($produto['nome']) ?>">
                     <div class="imagem-div"><img src="../uploads/<?= htmlspecialchars($produto['imagem']) ?>" alt="" class="catalogo-imagem"></div>
                     <div class="info-card">
-                        <p class="name-product"><?= htmlspecialchars($produto['nome']) ?></p>
+                        <div>
+                            <p class="name-product"><?= htmlspecialchars($produto['nome']) ?></p>
+                        </div>
                     
                         <div class="price">R$<?= number_format($produto['preco'], 2, ',', '.') ?></div>
                         <a href="../public/produto.php?id=<?= $produto['id'] ?>" class="btn pd ativo">Ver Detalhes</a>

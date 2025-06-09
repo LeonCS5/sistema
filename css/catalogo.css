@@ -59,7 +59,9 @@
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-
+.name-product {
+   width: 120px;
+}
 
 .product-card h3 { 
     margin-top: 0; 
